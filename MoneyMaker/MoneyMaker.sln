@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaker", "MoneyMaker\MoneyMaker.csproj", "{BDF5E4F6-172B-4A74-A4D3-343C63C01736}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MoneyMakerSetup", "..\Setup\Setup.vdproj", "{1B03B856-4C18-421A-B454-A1E69DEB6333}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		DVD-5|Any CPU = DVD-5|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SingleImage|Any CPU = SingleImage|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF5E4F6-172B-4A74-A4D3-343C63C01736}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.CD_ROM|Any CPU.ActiveCfg = Release
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.CD_ROM|Any CPU.Build.0 = Release
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.Debug|Any CPU.ActiveCfg = Debug
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.Debug|Any CPU.Build.0 = Debug
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.DVD-5|Any CPU.ActiveCfg = Debug
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.DVD-5|Any CPU.Build.0 = Debug
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.Release|Any CPU.ActiveCfg = Release
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.Release|Any CPU.Build.0 = Release
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.SingleImage|Any CPU.ActiveCfg = Release
+		{1B03B856-4C18-421A-B454-A1E69DEB6333}.SingleImage|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
