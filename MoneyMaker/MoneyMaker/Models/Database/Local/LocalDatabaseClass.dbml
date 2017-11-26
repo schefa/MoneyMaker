@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LocalDatabase" Class="LocalDatabaseClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\LocalDatabase.mdf;Integrated Security=True" SettingsObjectName="MoneyMaker.Properties.Settings" SettingsPropertyName="LocalDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.WatchList" Member="WatchList">
+    <Type Name="WatchList">
+      <Column Name="WatchListID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserProfile_WatchList" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BankAccount" Member="BankAccount">
+    <Type Name="BankAccount">
+      <Column Name="BankAccountID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AccountBalance" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="BankAccount_Transactions" Member="Transactions" ThisKey="BankAccountID" OtherKey="BankAccountID" Type="Transactions" />
+      <Association Name="UserProfile_BankAccount" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Depot" Member="Depot">
+    <Type Name="Depot">
+      <Column Name="DepotID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserProfile_Depot" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LeasingCalculator" Member="LeasingCalculator">
+    <Type Name="LeasingCalculator">
+      <Column Name="LeasingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Interest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentInterval" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="PaymentMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Duration" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InternalDiscountRate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Deposit" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ResidualValue" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="LeasingRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="StartAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserProfile_LeasingCalculator" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoanCalculator" Member="LoanCalculator">
+    <Type Name="LoanCalculator">
+      <Column Name="BulletLoan" Type="System.Data.Linq.Binary" DbType="Binary(1)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="InterestMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="MinimumRepaymentRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="LoanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="LoanData_LoanCalculator" Member="LoanData" ThisKey="LoanID" OtherKey="LoanID" Type="LoanData" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoanData" Member="LoanData">
+    <Type Name="LoanData">
+      <Column Name="LoanID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="loanAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="processingFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="interestRate" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="rateOption" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="repaymentRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="repaymentInterval" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="modeOfPayment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ballonPayment" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="duration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="durationMode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="remainingDebt" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="calculateOption" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="LoanData_LoanCalculator" Member="LoanCalculator" ThisKey="LoanID" OtherKey="LoanID" Type="LoanCalculator" />
+      <Association Name="UserProfile_LoanData" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ManagerProfile" Member="ManagerProfile">
+    <Type Name="ManagerProfile">
+      <Column Name="AccountID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="TempPassword" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="UseType" Type="System.Data.Linq.Binary" DbType="Binary(1)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="ManagerProfile_UserProfile" Member="UserProfile" ThisKey="AccountID" OtherKey="AccountID" Type="UserProfile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReturnCalculator" Member="ReturnCalculator">
+    <Type Name="ReturnCalculator">
+      <Column Name="ReturnID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stocks" Member="Stocks">
+    <Type Name="Stocks">
+      <Column Name="StockID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Symbol" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="StockExchange" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Typ" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Stocks_StocksMap" Member="StocksMap" ThisKey="StockID" OtherKey="StockID" Type="StocksMap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StocksMap" Member="StocksMap">
+    <Type Name="StocksMap">
+      <Column Name="StocksMapID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Category" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StockID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PurchasePrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PurchaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="StocksMap_UserLines" Member="UserLines" ThisKey="StocksMapID" OtherKey="StocksMapID" Type="UserLines" />
+      <Association Name="Stocks_StocksMap" Member="Stocks" ThisKey="StockID" OtherKey="StockID" Type="Stocks" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserLines" Member="UserLines">
+    <Type Name="UserLines">
+      <Column Name="LineID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StocksMapID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PricePoint1" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PricePoint2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="TimePoint1" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="TimePoint2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="LineColor" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Thickness" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Association Name="StocksMap_UserLines" Member="StocksMap" ThisKey="StocksMapID" OtherKey="StocksMapID" Type="StocksMap" IsForeignKey="true" />
+      <Association Name="UserProfile_UserLines" Member="UserProfile" ThisKey="UserID" OtherKey="UserID" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserProfile" Member="UserProfile">
+    <Type Name="UserProfile">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ForName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="AccountID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserProfile_WatchList" Member="WatchList" ThisKey="UserID" OtherKey="UserID" Type="WatchList" />
+      <Association Name="UserProfile_BankAccount" Member="BankAccount" ThisKey="UserID" OtherKey="UserID" Type="BankAccount" />
+      <Association Name="UserProfile_Depot" Member="Depot" ThisKey="UserID" OtherKey="UserID" Type="Depot" />
+      <Association Name="UserProfile_LeasingCalculator" Member="LeasingCalculator" ThisKey="UserID" OtherKey="UserID" Type="LeasingCalculator" />
+      <Association Name="UserProfile_LoanData" Member="LoanData" ThisKey="UserID" OtherKey="UserID" Type="LoanData" />
+      <Association Name="UserProfile_UserLines" Member="UserLines" ThisKey="UserID" OtherKey="UserID" Type="UserLines" />
+      <Association Name="ManagerProfile_UserProfile" Member="ManagerProfile" ThisKey="AccountID" OtherKey="AccountID" Type="ManagerProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transactions" Member="Transactions">
+    <Type Name="Transactions">
+      <Column Name="TransactionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TransactionType" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="BankAccountID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="BankAccount_Transactions" Member="BankAccount" ThisKey="BankAccountID" OtherKey="BankAccountID" Type="BankAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
