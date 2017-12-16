@@ -38,44 +38,11 @@ namespace MoneyMaker.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=goliath.wi.fh-flensburg.de;Initial Catalog=ws1617_mmaker;Persist Secu" +
-            "rity Info=True;User ID=ws1617_mmaker;Password=pkn_7281")]
-        public string ws1617_mmakerConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\LocalDatabase" +
+            ".mdf;Integrated Security=True")]
+        public string LocalDatabaseConnectionString {
             get {
-                return ((string)(this["ws1617_mmakerConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=goliath.wi.fh-flensburg.de;Persist Security Info=True;User ID=ws1617_" +
-            "mmaker")]
-        public string DataSourceConnectionString {
-            get {
-                return ((string)(this["DataSourceConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=goliath.wi.fh-flensburg.de;Persist Security Info=True;User ID=ws1617_" +
-            "mmaker;Password=pkn_7281")]
-        public string DataSourceConnectionString1 {
-            get {
-                return ((string)(this["DataSourceConnectionString1"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=goliath.wi.fh-flensburg.de;Initial Catalog=ws1617_mmaker;Persist Secu" +
-            "rity Info=True;User ID=ws1617_mmaker")]
-        public string ws1617_mmakerConnectionString1 {
-            get {
-                return ((string)(this["ws1617_mmakerConnectionString1"]));
+                return ((string)(this["LocalDatabaseConnectionString"]));
             }
         }
     }

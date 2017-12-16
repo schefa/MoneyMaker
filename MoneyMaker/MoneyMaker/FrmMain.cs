@@ -18,19 +18,6 @@ namespace MoneyMaker
     {
 
         #region Attributes
-        private UserProfile user;
-        public UserProfile User
-        {
-            get { return user; }
-            private set { user = value; }
-        }
-
-        private ManagerProfile managerProfile;
-        public ManagerProfile ManagerProfile
-        {
-            get { return managerProfile; }
-            private set { managerProfile = value; }
-        }
 
         private static FrmMain current = null;
         public static FrmMain Current
@@ -38,15 +25,9 @@ namespace MoneyMaker
             get { return current; }
         }
 
-        private bool isLocal = false;
-        public bool IsLocal
-        {
-            get { return isLocal; }
-        }      
-
         #endregion
 
-        public FrmMain(ManagerProfile managerProfile = null)
+        public FrmMain()
         {
             InitializeComponent();
             
@@ -58,29 +39,14 @@ namespace MoneyMaker
                 current = this;
                 panelView.Controls.Add(NavigationFactory.create(NavigationType.Dashboard));
             }
-
-            if (managerProfile != null)
-            {
-                // Server
-                ManagerProfile = managerProfile;
-                statusStripManager.Text = ManagerProfile.UserName;
-            }
-            else
-            {
-                // Local manager
-                ManagerProfile = ManagerModel.getInstance().getDefaultManager();
-                statusStripManager.Visible = false;
-                isLocal = true;
-            }
-
-            // Get current user
-            User = (ManagerProfile != null) ? new UserProfileModel().getItem(ManagerProfile.AccountID) : null;
-
+             
+            // Local manager
+            statusStripManager.Visible = false; 
+            
             // Sets the icon
             Icon = Properties.Resources.LogoIcon;
             
-            createNavigationTree();
-            createUserSelectBoxAsync();
+            createNavigationTree(); 
 
         }
 
@@ -94,7 +60,7 @@ namespace MoneyMaker
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 
             // Checking if local server instance was selected, and there ain't more than one MoneyMaker process opened
-            if (connectionString.Contains("LocalDB") && !(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
+            if (connectionString.Contains("localdb") && !(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 
@@ -118,85 +84,6 @@ namespace MoneyMaker
             this.Text = "MoneyMaker - " + text;
         }
 
-        #region User selection
-        /// <summary>
-        /// ComboBox to change the current user
-        /// </summary>
-        public async void createUserSelectBoxAsync(bool setSelected = true)
-        {
-            notifyUser(NotifyType.PrepareMessage, "User werden geladen...");
-
-            var userModel = new UserProfileModel();
-            cbxCurrentUser.Items.Clear();
-
-            IQueryable<UserProfile> collection = null;
-            if (ManagerProfile != null)
-            {
-                Task<IQueryable<UserProfile>> task = Task.Run(() => userModel.getItems(ManagerProfile.AccountID));
-                collection = await task;
-
-                if (collection != null)
-                {
-                    cbxCurrentUser.DisplayMember = "LastName";
-                    foreach (var item in collection)
-                    { 
-                        cbxCurrentUser.Items.Add(item);
-                    }
-                    if(setSelected)
-                        cbxCurrentUser.SelectedIndex = 0;
-                }
-                else
-                {
-                    cbxCurrentUser.Items.Add("Keine Benutzerprofile angelegt!");
-                    cbxCurrentUser.SelectedIndex = 0;
-                }
-            }
-
-            notifyUser(NotifyType.StatusMessage, "Bereit");
-        }
-
-        /// <summary>
-        /// Sets the combobox format
-        /// </summary>
-        private void cbxCurrentUser_Format(object sender, ListControlConvertEventArgs e)
-        {
-            // Assuming your class called Employee , and Firstname & Lastname are the fields
-            var user = (e.ListItem as UserProfile);
-            if (user != null)
-            {
-                string lastname = ((UserProfile)e.ListItem).ForName;
-                string firstname = ((UserProfile)e.ListItem).LastName;
-                e.Value = lastname + " " + firstname;
-            }
-        }
-
-        /// <summary>
-        /// Method fired after current user was changed
-        /// </summary> 
-        private void cbxCurrentUser_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            User = cbxCurrentUser.SelectedItem as UserProfile;
-            if(User != null)
-            {
-                navigate(new NavigationItem() { View = NavigationType.Dashboard });
-                createNavigationTree();
-            }
-        }
-
-        public void setUser(UserProfile user)
-        {
-            for (int i = 0; i < cbxCurrentUser.Items.Count; i++)
-            {
-                var tmp = (cbxCurrentUser.Items[i] as UserProfile);
-                if (tmp.UserID == user.UserID)
-                {
-                    cbxCurrentUser.SelectedIndex = i;
-                }
-            }
-        }
-
-        #endregion
-
         #region Navigation
         /// <summary>
         /// Builds the navigation items with Factory pattern
@@ -205,27 +92,10 @@ namespace MoneyMaker
         { 
             navigationTree.Nodes.Clear();
             navigationTree.Nodes.Add(new NavigationItem() { Text = "Dashboard", View = NavigationType.Dashboard });
-            navigationTree.Nodes.Add(new NavigationItem() { Text = "Benutzerprofile", View = NavigationType.UserProfiles });
-
-            navigationTree.Nodes.Add("Investierung");
-            if (User?.UserID > 0)
-            {
-                navigationTree.Nodes[2].Nodes.Add(new NavigationItem() { Text = "Watchlists", View = NavigationType.Watchlists });
-                navigationTree.Nodes[2].Nodes.Add(new NavigationItem() { Text = "Bank", View = NavigationType.BankAccount });
-                navigationTree.Nodes[2].Nodes.Add(new NavigationItem() { Text = "Depot", View = NavigationType.Depot });
-            }
-            else
-            {
-                navigationTree.Nodes[2].Nodes.Add("Legen Sie ein\nNutzerprofil an");
-                navigationTree.Nodes[2].Nodes[0].NodeFont = new Font("Segoe UI", 8);
-            }
-
-            navigationTree.Nodes.Add("Finanzierung");
-            navigationTree.Nodes[3].Nodes.Add(new NavigationItem() { Text = "Kreditrechner", View = NavigationType.LoanCalculator });
-            navigationTree.Nodes[3].Nodes.Add(new NavigationItem() { Text = "Leasingrechner", View = NavigationType.LeasingCalculator });
-            navigationTree.Nodes[3].Nodes.Add(new NavigationItem() { Text = "Tilgungsrechner", View = NavigationType.RedemptionCalculator });
-            navigationTree.Nodes[3].Nodes.Add(new NavigationItem() { Text = "Währungsrechner", View = NavigationType.CurrencyCalculator });
-
+            navigationTree.Nodes.Add(new NavigationItem() { Text = "Bank", View = NavigationType.BankAccount });            
+            navigationTree.Nodes.Add(new NavigationItem() { Text = "Watchlists", View = NavigationType.Watchlists });
+            navigationTree.Nodes.Add(new NavigationItem() { Text = "Depot", View = NavigationType.Depot });
+            
             createNavigationTreeSubItems();
             navigationTree.ExpandAll();
         }
@@ -234,27 +104,24 @@ namespace MoneyMaker
         /// Async method to get the subitems from database and put them in the navigation tree
         /// </summary>
         public async void createNavigationTreeSubItems()
-        {
-            if(User != null)
+        { 
+            notifyUser(NotifyType.PrepareMessage, "Watchlists werden geladen...");
+            var wlModel = new WatchlistsModel();
+            Task<List<WatchListViewItem>> task = Task.Run(() => wlModel.getWatchlists());
+            var watchlistItems = await task;
+
+            navigationTree.Nodes[2].Nodes.Clear();
+            foreach (var watchlist in watchlistItems)
             {
-                notifyUser(NotifyType.PrepareMessage, "Watchlists werden geladen...");
-                var wlModel = new WatchlistsModel();
-                Task<List<WatchListViewItem>> task = Task.Run(() => wlModel.getWatchlists(User.UserID));
-                var watchlistItems = await task;
-
-                navigationTree.Nodes[2].Nodes[0].Nodes.Clear();
-                foreach (var watchlist in watchlistItems)
-                {
-                    navigationTree.Nodes[2].Nodes[0].Nodes.Add(new NavigationItem() {
-                        Text = watchlist.Name,
-                        Parameters = new NavigationParams() { Watchlist = watchlist.Watchlist },
-                        View = NavigationType.Watchlist
-                    });
-                }
-                navigationTree.Nodes[2].Nodes[0].ExpandAll();
-                notifyUser(NotifyType.StatusMessage, "Bereit");
+                navigationTree.Nodes[2].Nodes.Add(new NavigationItem() {
+                    Text = watchlist.Name,
+                    Parameters = new NavigationParams() { Watchlist = watchlist.Watchlist },
+                    View = NavigationType.Watchlist
+                });
             }
-
+            navigationTree.Nodes[2].ExpandAll();
+            notifyUser(NotifyType.StatusMessage, "Bereit");
+            
         }
         
         /// <summary>
@@ -315,14 +182,6 @@ namespace MoneyMaker
 
             statusLabel.ForeColor = Color.White;
             statusLabel.Text = strMessage;
-        }
-
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Form frmMain = new FrmLogin();
-            frmMain.ShowDialog();
-            this.Close();
         }
 
         public enum NotifyType

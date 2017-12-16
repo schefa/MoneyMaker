@@ -10,7 +10,6 @@ namespace MoneyMaker.ViewModels
 {
     public class UserlineModel : DatabaseModel
     {
-        private UserProfile user;
         private StockListitem stock;
         private Color lineColor;
         private int lineThickness;
@@ -18,9 +17,8 @@ namespace MoneyMaker.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public UserlineModel(UserProfile user, StockListitem stock, Color lineColor = default(Color), int lineThickness = 1)
+        public UserlineModel(StockListitem stock, Color lineColor = default(Color), int lineThickness = 1)
         { 
-            this.user = user;
             this.stock = stock;
             this.lineColor = lineColor;
             this.lineThickness = lineThickness;
@@ -43,7 +41,6 @@ namespace MoneyMaker.ViewModels
                     TimePoint2 = p2.XValue,
                     LineColor = ColorTranslator.ToHtml(lineColor),
                     Thickness = Convert.ToSByte(lineThickness),
-                    UserID = user.UserID,
                 };
                 db.UserLines.InsertOnSubmit(newItem);
                 db.SubmitChanges();
@@ -81,7 +78,6 @@ namespace MoneyMaker.ViewModels
             {
                 var sequenz = (from ul in db.UserLines
                             where ul.StocksMapID == stock.StocksMapID
-                            where ul.UserID == user.UserID
                             select ul);
 
                 db.UserLines.DeleteAllOnSubmit(sequenz);

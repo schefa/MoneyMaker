@@ -14,16 +14,10 @@ namespace MoneyMaker.Views
     {
         private WatchlistsModel model = new WatchlistsModel();
         private WatchList selected;
-        private UserProfile user;
 
         public WatchlistsView()
         {
             InitializeComponent();
-            this.user = mainForm.User;
-            if(user != null)
-            { 
-                refreshWatchlistsAsync();
-            }
             splitContainerMain.Panel2Collapsed = true;
             mainForm.setHeadline("Watchlists");
         }
@@ -33,7 +27,7 @@ namespace MoneyMaker.Views
             mainForm.notifyUser(FrmMain.NotifyType.PrepareMessage, "Lädt watchlists...");
 
             lvWatchlists.Items.Clear();
-            Task<List<WatchListViewItem>> task = Task.Run(() => model.getWatchlists(user.UserID));
+            Task<List<WatchListViewItem>> task = Task.Run(() => model.getWatchlists());
             var list = await task;
             foreach (var item in list)
             { 
@@ -106,7 +100,7 @@ namespace MoneyMaker.Views
                 if(tbName.Text.Length > 0)
                 {
 
-                    model.saveWatchlist(new WatchList() { Name = tbName.Text, UserID = user.UserID });
+                    model.saveWatchlist(new WatchList() { Name = tbName.Text });
                     mainForm.createNavigationTreeSubItems();
                     closeRightForm();
                 }

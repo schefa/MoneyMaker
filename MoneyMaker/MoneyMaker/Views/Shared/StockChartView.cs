@@ -124,7 +124,7 @@ namespace MoneyMaker.Views
 
             mainForm.notifyUser(FrmMain.NotifyType.PrepareMessage, "Userlines werden geladen...");
 
-            var model = new UserlineModel(mainForm.User, stock);
+            var model = new UserlineModel(stock);
             Task<List<UserLines>> task = Task.Run(() => model.getAllUserlines());
             var userlines = await task;
 
@@ -528,7 +528,7 @@ namespace MoneyMaker.Views
                 chartStock.Series["Line" + pointNr].Color = lineColor;
                 chartStock.Series["Line" + pointNr].BorderWidth = lineThickness;
                 
-                UserlineModel ulModel = new UserlineModel(mainForm.User, stock, lineColor, lineThickness); 
+                UserlineModel ulModel = new UserlineModel(stock, lineColor, lineThickness); 
                 Task<UserLines> task = Task.Run(() => ulModel.insertUserline(lastPoint, currentPoint));
                 var line = await task;
 
@@ -557,7 +557,7 @@ namespace MoneyMaker.Views
         /// </summary>
         private async void getAllLinesAsync()
         {
-            var model = new UserlineModel(mainForm.User, stock);
+            var model = new UserlineModel(stock);
             Task<List<UserLines>> task = Task.Run(() => model.getAllUserlines());
             var userlines = await task;
             this.userlines = userlines;
@@ -606,7 +606,7 @@ namespace MoneyMaker.Views
         private void deleteLinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            UserlineModel model = new UserlineModel(mainForm.User, stock);
+            UserlineModel model = new UserlineModel(stock);
             model.deleteAllUserlines();
             refreshChartAsync(stock.symbol);
             pointNr = 1;
@@ -639,7 +639,7 @@ namespace MoneyMaker.Views
                 selectedLine.Thickness = (short)lineThickness;
                 selectedLine.LineColor = ColorTranslator.ToHtml( lineColor );
 
-                var model = new UserlineModel(mainForm.User, stock); 
+                var model = new UserlineModel(stock); 
                 Task task = Task.Run(() => model.updateUserline(selectedLine));
                 await task;
                 refreshChartAsync(stock.symbol);
@@ -657,7 +657,7 @@ namespace MoneyMaker.Views
             if (selectedLine != null)
             {
                 mainForm.notifyUser(FrmMain.NotifyType.PrepareMessage, "Linie wird gelöscht...");
-                var model = new UserlineModel(mainForm.User, stock);
+                var model = new UserlineModel(stock);
                 Task task = Task.Run(() => model.deleteUserline(selectedLine));
                 await task;
                 refreshChartAsync(stock.symbol);
@@ -672,7 +672,7 @@ namespace MoneyMaker.Views
         /// </summary>
         private void btnLinesDeleteAll_Click(object sender, EventArgs e)
         {
-            UserlineModel model = new UserlineModel(mainForm.User, stock);
+            UserlineModel model = new UserlineModel(stock);
             model.deleteAllUserlines();
             refreshChartAsync(stock.symbol);
             pointNr = 1;

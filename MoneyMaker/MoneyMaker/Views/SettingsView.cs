@@ -16,18 +16,13 @@ namespace MoneyMaker.Views
         private Currency.CurrencyCode defaultCurrency = SettingsModel.getInstance().getCurrency();
         private decimal defaultCapitalGainTax = SettingsModel.getInstance().getCapitalGainTax();
         private FinanceAPI.FinanceStrategies webFinanceStrategy = SettingsModel.getInstance().getFinanceDataProvider();
-
-        private bool passwortStrength = false;
-
+         
         public SettingsView()
         {
             InitializeComponent();
             mainForm.setHeadline("Einstellungen");
-            
-            if(mainForm.IsLocal)
-            {
-                tabSettings.TabPages.Remove(tabPage2);               
-            }
+             
+                tabSettings.TabPages.Remove(tabPage2);  
 
             cbxDataProvider.Items.Add(FinanceAPI.FinanceStrategies.Google);
             cbxDataProvider.Items.Add(FinanceAPI.FinanceStrategies.Yahoo);
@@ -72,47 +67,7 @@ namespace MoneyMaker.Views
             await task;
             mainForm.notifyUser(FrmMain.NotifyType.StatusMessage);
         }
-
-        private void btnChangePassword_Click(object sender, System.EventArgs e)
-        {
-            var manager = ((FrmMain)ParentForm).ManagerProfile;
-            
-            if (manager.Password.Equals(MoneyMakerHelper.getHash(tbPasswordOld.Text)) && !tbPasswordOld.Text.Equals(tbPasswordNew1.Text) && tbPasswordNew1.Text.Equals(tbPasswordNew2.Text) && passwortStrength == true)
-            {
-                ManagerModel.getInstance().setPassword(manager, tbPasswordNew1.Text);
-                MessageBox.Show("Passwort erfolgreich geändert.");
-                tbPasswordOld.Text = string.Empty;
-                tbPasswordNew1.Text = string.Empty;
-                tbPasswordNew2.Text = string.Empty;                            
-            }
-            else
-            {
-                MessageBox.Show("Passwort ändern fehlgeschlagen.");
-                tbPasswordOld.Text = string.Empty;
-                tbPasswordNew1.Text = string.Empty;
-                tbPasswordNew2.Text = string.Empty;                
-            }
-        }
-
-        private void tbPasswordNew1_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(tbPasswordNew1.Text))
-            {
-                lblCharNote.Text = "";
-            }
-            else if (MoneyMakerHelper.isPasswordStrength(tbPasswordNew1.Text) == false)
-            {
-                lblCharNote.ForeColor = Color.DarkRed;
-                lblCharNote.Text = "Passwort ist zu schwach";
-                passwortStrength = false;          
-            }
-            else if (MoneyMakerHelper.isPasswordStrength(tbPasswordNew1.Text) == true)
-            {
-                lblCharNote.ForeColor = Color.DarkGreen;
-                lblCharNote.Text = "";
-                passwortStrength = true;            
-            }
-        }
+        
 
     }
 }

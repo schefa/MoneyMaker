@@ -11,14 +11,13 @@ namespace MoneyMaker.ViewModels
         /// <summary>
         /// Gets a list of stocks for a watchlist
         /// </summary>
-        public List<WatchListViewItem> getWatchlists(int userID)
+        public List<WatchListViewItem> getWatchlists()
         {
             List<WatchListViewItem> result = new List<WatchListViewItem>();
 
             if (ConnectionState == true)
             {
                 var query = (from wl in db.WatchList
-                             where wl.UserID == userID
                              join sm in db.StocksMap on wl.WatchListID equals sm.CategoryID into stocks
                              select new {
                                  Watchlist = wl,
@@ -47,8 +46,7 @@ namespace MoneyMaker.ViewModels
             {
                 db.WatchList.InsertOnSubmit(new WatchList
                 {
-                    Name = wl.Name,
-                    UserID = wl.UserID
+                    Name = wl.Name
                 });
                 db.SubmitChanges();
             }

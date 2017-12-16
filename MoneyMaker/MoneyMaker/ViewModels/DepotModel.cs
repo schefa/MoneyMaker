@@ -9,15 +9,6 @@ namespace MoneyMaker.ViewModels
 {
     public class DepotModel : DatabaseModel
     {
-        private UserProfile user;
-
-        /// <summary>
-        /// Custom constructor accepts the user
-        /// </summary>
-        public DepotModel(UserProfile user)
-        {
-            this.user = user;
-        }
 
         public StockListitem buildWatchlistStockItem(YahooStockSearchResult selectedItem, decimal quantity, double price = 0, decimal pricePurchase = 0)
         {
@@ -100,10 +91,9 @@ namespace MoneyMaker.ViewModels
         /// </summary>
         public Depot getUserDepot()
         {
-            if (ConnectionState == true && user != null)
+            if (ConnectionState == true)
             { 
                 var query = (from depot in db.Depot
-                               where depot.UserID == user.UserID
                                select depot).FirstOrDefault();
                 return query;
             }
@@ -158,7 +148,7 @@ namespace MoneyMaker.ViewModels
         /// <param name="stock">the stock data</param>
         public void saveTransaction(TransactionItem.TransactionTypeEnum type, StockListitem stock)
         {
-            BankAccountModel bankModel = new BankAccountModel(user);
+            BankAccountModel bankModel = new BankAccountModel();
             var bank = bankModel.getBank();
             var ttype = (type == TransactionItem.TransactionTypeEnum.Purchase) ? 'p' : 's';
             var totalSum = (decimal) stock.PricePurchase * (decimal) stock.Quantity;
@@ -218,7 +208,7 @@ namespace MoneyMaker.ViewModels
                     }
                     db.SubmitChanges();
                     
-                    BankAccountModel bankModel = new BankAccountModel(user);
+                    BankAccountModel bankModel = new BankAccountModel();
                     var bank = bankModel.getBank();
                     var valueBought = quantity * query.PurchasePrice;
                     var valueSold = quantity * Convert.ToDecimal( stock.PriceCurrent );

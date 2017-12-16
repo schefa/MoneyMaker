@@ -30,7 +30,7 @@ namespace MoneyMaker.ViewModels
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 
             // Checking if local server instance was selected, and there ain't more than one MoneyMaker process opened
-            if (connectionString.Contains("LocalDB") && !(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
+            if (connectionString.Contains("localdb") && !(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 

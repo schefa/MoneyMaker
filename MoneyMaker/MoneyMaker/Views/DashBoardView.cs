@@ -21,12 +21,7 @@ namespace MoneyMaker.Views
             Parent.Controls.Add(view);
             Parent.Controls.Remove(this);
         }
-
-        private void btnUserProfiles_Click(object sender, EventArgs e)
-        {
-            navigate(NavigationFactory.create(NavigationType.UserProfiles));
-        }
-
+        
         private void btnDepot_Click(object sender, EventArgs e)
         {
             navigate(NavigationFactory.create(NavigationType.Depot));
@@ -36,16 +31,7 @@ namespace MoneyMaker.Views
         {
             navigate(NavigationFactory.create(NavigationType.Watchlists));
         }
-
-        private void btnLoanCalculator_Click(object sender, EventArgs e)
-        {
-            navigate(NavigationFactory.create(NavigationType.LoanCalculator));
-        }
-
-        private void btnLeasingCalculator_Click(object sender, EventArgs e)
-        {
-            navigate(NavigationFactory.create(NavigationType.LeasingCalculator));
-        }
+        
 
         private void btnBank_Click(object sender, EventArgs e)
         {

@@ -71,8 +71,8 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
@@ -102,21 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ComboBoxItemControl.cs" />
-    <Compile Include="Controls\LeasingCalculator.cs" />
-    <Compile Include="Controls\LoanCalculator.cs" />
-    <Compile Include="Controls\RedemptionCalculator.cs" />
-    <Compile Include="Controls\TableCalculator.cs" />
     <Compile Include="FrmGuide.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmGuide.designer.cs">
       <DependentUpon>FrmGuide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmLogin.Designer.cs">
-      <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -133,31 +123,18 @@
       <DependentUpon>InstallHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ListViewSorter.cs" />
-    <Compile Include="Helpers\Mapper.cs" />
     <Compile Include="Libraries\Navigation\NavigationFactory.cs" />
     <Compile Include="Libraries\Navigation\NavigationParams.cs" />
     <Compile Include="Libraries\Webservices\Entities\CurrencyRate.cs" />
     <Compile Include="Libraries\Webservices\Entities\Google\GoogleCurrencyRate.cs" />
     <Compile Include="Libraries\Webservices\Entities\Yahoo\YahooCurrencyRate.cs" />
     <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\FinancingItem.cs" />
-    <Compile Include="Models\LeasingTable.cs" />
-    <Compile Include="Models\LeasingTableRow.cs" />
-    <Compile Include="Models\LoanTable.cs" />
-    <Compile Include="Models\RedemptionTable.cs" />
-    <Compile Include="Models\RedemptionTableRow.cs" />
     <Compile Include="Models\WatchListViewItem.cs" />
-    <Compile Include="Models\LoanTableRow.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\FinancingModel.cs" />
-    <Compile Include="ViewModels\LeasingModel.cs" />
-    <Compile Include="ViewModels\LoanModel.cs" />
-    <Compile Include="ViewModels\ManagerModel.cs" />
-    <Compile Include="ViewModels\RedemptionModel.cs" />
     <Compile Include="ViewModels\SettingsModel.cs" />
     <Compile Include="Libraries\Webservices\Entities\ExchangeCode.cs" />
     <Compile Include="Libraries\Webservices\Entities\Google\GoogleSingleQuote.cs" />
@@ -176,19 +153,15 @@
     <Compile Include="ViewModels\BankAccountModel.cs" />
     <Compile Include="ViewModels\DatabaseModel.cs" />
     <Compile Include="ViewModels\DepotModel.cs" />
-    <Compile Include="Models\LeasingData.cs" />
     <Compile Include="Libraries\Navigation\NavigationItem.cs" />
     <Compile Include="Libraries\Webservices\Entities\Yahoo\YahooHistoricalQuote.cs" />
     <Compile Include="Libraries\Webservices\Entities\Yahoo\YahooSingleQuote.cs" />
     <Compile Include="Libraries\Webservices\Yahoo\YahooURIBuilder.cs" />
     <Compile Include="Libraries\Webservices\Entities\Yahoo\YahooStockSearchResult.cs" />
     <Compile Include="Libraries\Webservices\Yahoo\YahooFinanceSearch.cs" />
-    <Compile Include="Models\LoanData.cs" />
-    <Compile Include="Models\RedemptionData.cs" />
     <Compile Include="Models\StockListitem.cs" />
     <Compile Include="Models\TransactionItem.cs" />
     <Compile Include="ViewModels\UserlineModel.cs" />
-    <Compile Include="ViewModels\UserProfileModel.cs" />
     <Compile Include="ViewModels\WatchlistModel.cs" />
     <Compile Include="ViewModels\WatchlistsModel.cs" />
     <Compile Include="Program.cs" />
@@ -201,9 +174,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseClass.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Libraries\Login\ILogin.cs" />
-    <Compile Include="Libraries\Login\Proxy.cs" />
-    <Compile Include="Libraries\Login\RealProgram.cs" />
     <Compile Include="Views\BankAccountView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -228,59 +198,14 @@
     <Compile Include="Views\DepotView.Designer.cs">
       <DependentUpon>DepotView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\LeasingCalculatorView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LeasingCalculatorView.Designer.cs">
-      <DependentUpon>LeasingCalculatorView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LeasingsView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LeasingsView.Designer.cs">
-      <DependentUpon>LeasingsView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\LegalView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\LegalView.Designer.cs">
       <DependentUpon>LegalView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoanCalculatorView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LoanCalculatorView.Designer.cs">
-      <DependentUpon>LoanCalculatorView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FinancingView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\FinancingView.Designer.cs">
-      <DependentUpon>FinancingView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoansView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LoansView.Designer.cs">
-      <DependentUpon>LoansView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoginView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Views\MoneyMakerView.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\RedemptionCalculatorView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\RedemptionCalculatorView.Designer.cs">
-      <DependentUpon>RedemptionCalculatorView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RedemptionsView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\RedemptionsView.Designer.cs">
-      <DependentUpon>RedemptionsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsView.cs">
       <SubType>UserControl</SubType>
@@ -306,48 +231,6 @@
     <Compile Include="Views\Shared\StockSearchView.Designer.cs">
       <DependentUpon>StockSearchView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ManagerLoginView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\ManagerLoginView.Designer.cs">
-      <DependentUpon>ManagerLoginView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ManagerPasswordResetView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\ManagerPasswordResetView.Designer.cs">
-      <DependentUpon>ManagerPasswordResetView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tables\LeasingCalculatorTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Tables\LeasingCalculatorTable.Designer.cs">
-      <DependentUpon>LeasingCalculatorTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tables\LoanCalculatorTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Tables\LoanCalculatorTable.Designer.cs">
-      <DependentUpon>LoanCalculatorTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tables\RedemptionCalculatorTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Tables\RedemptionCalculatorTable.Designer.cs">
-      <DependentUpon>RedemptionCalculatorTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserProfilesView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UserProfilesView.Designer.cs">
-      <DependentUpon>UserProfilesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ManagerRegistrationView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\ManagerRegistrationView.Designer.cs">
-      <DependentUpon>ManagerRegistrationView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\WatchlistView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -362,9 +245,6 @@
     </Compile>
     <EmbeddedResource Include="FrmGuide.resx">
       <DependentUpon>FrmGuide.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmLogin.resx">
-      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -390,29 +270,8 @@
     <EmbeddedResource Include="Views\DepotView.resx">
       <DependentUpon>DepotView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LeasingCalculatorView.resx">
-      <DependentUpon>LeasingCalculatorView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LeasingsView.resx">
-      <DependentUpon>LeasingsView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\LegalView.resx">
       <DependentUpon>LegalView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LoanCalculatorView.resx">
-      <DependentUpon>LoanCalculatorView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\FinancingView.resx">
-      <DependentUpon>FinancingView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LoansView.resx">
-      <DependentUpon>LoansView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\RedemptionCalculatorView.resx">
-      <DependentUpon>RedemptionCalculatorView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\RedemptionsView.resx">
-      <DependentUpon>RedemptionsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SettingsView.resx">
       <DependentUpon>SettingsView.cs</DependentUpon>
@@ -425,27 +284,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\StockSearchView.resx">
       <DependentUpon>StockSearchView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ManagerLoginView.resx">
-      <DependentUpon>ManagerLoginView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ManagerPasswordResetView.resx">
-      <DependentUpon>ManagerPasswordResetView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Tables\LeasingCalculatorTable.resx">
-      <DependentUpon>LeasingCalculatorTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Tables\LoanCalculatorTable.resx">
-      <DependentUpon>LoanCalculatorTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Tables\RedemptionCalculatorTable.resx">
-      <DependentUpon>RedemptionCalculatorTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserProfilesView.resx">
-      <DependentUpon>UserProfilesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ManagerRegistrationView.resx">
-      <DependentUpon>ManagerRegistrationView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WatchlistView.resx">
       <DependentUpon>WatchlistView.cs</DependentUpon>

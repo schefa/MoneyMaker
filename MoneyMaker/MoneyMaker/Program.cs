@@ -35,11 +35,8 @@ namespace MoneyMaker
             Application.SetCompatibleTextRenderingDefault(false);         
 
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-
-            if (connectionString.Contains("LocalDB"))
-                Application.Run(new FrmMain());
-            else
-                Application.Run(new FrmLogin());
+             
+            Application.Run(new FrmMain()); 
         }
     }
 }

@@ -10,13 +10,11 @@ namespace MoneyMaker.ViewModels
     {
 
         #region Constructor Singleton
-
-        private static ManagerProfile manager = null;
+        
         private static SettingsModel instance = null;
 
         private SettingsModel()
         {
-            manager = FrmMain.Current.ManagerProfile;
         }
         
         public static SettingsModel getInstance()
@@ -35,7 +33,7 @@ namespace MoneyMaker.ViewModels
         private FinanceAPI.FinanceStrategies financeDataProvider = FinanceAPI.FinanceStrategies.Yahoo;
         public FinanceAPI.FinanceStrategies getFinanceDataProvider()
         {
-            if (ConnectionState == true && manager != null)
+            if (ConnectionState == true)
             {
                 var check = getSettingByKey("dataprovider");
                 if (check == null)
@@ -57,7 +55,6 @@ namespace MoneyMaker.ViewModels
             {
                 result = (from st in db.Settings
                             where st.key == key
-                            where st.AccountID == manager.AccountID
                             select st).FirstOrDefault();
             }
             return result;
@@ -65,13 +62,12 @@ namespace MoneyMaker.ViewModels
 
         public void setFinanceDataProvider(FinanceAPI.FinanceStrategies selected)
         {
-            if(ConnectionState == true && manager != null)
+            if(ConnectionState == true)
             {
                 var check = getSettingByKey("dataprovider");
                 if (check == null)
                 {
                     db.Settings.InsertOnSubmit(new Settings() {
-                        AccountID = manager.AccountID,
                         key = "dataprovider",
                         value = selected.ToString(),
                     });
@@ -89,7 +85,7 @@ namespace MoneyMaker.ViewModels
         private Currency.CurrencyCode currency = Currency.CurrencyCode.EUR;
         public Currency.CurrencyCode getCurrency()
         {
-            if (ConnectionState == true && manager != null)
+            if (ConnectionState == true )
             {
                 var check = getSettingByKey("currency");
 
@@ -103,7 +99,7 @@ namespace MoneyMaker.ViewModels
 
         public void setCurrency(Currency.CurrencyCode selected)
         {
-            if (ConnectionState == true && manager != null)
+            if (ConnectionState == true)
             {
                 var check = getSettingByKey("currency");
 
@@ -111,7 +107,6 @@ namespace MoneyMaker.ViewModels
                 {
                     db.Settings.InsertOnSubmit(new Settings()
                     {
-                        AccountID = manager.AccountID,
                         key = "currency",
                         value = selected.ToString(),
                     });
@@ -129,7 +124,7 @@ namespace MoneyMaker.ViewModels
         public decimal getCapitalGainTax()
         {
             decimal result = 0;
-            if (ConnectionState == true && manager != null)
+            if (ConnectionState == true )
             {
                 var check = getSettingByKey("capitaltax");
                 if(check != null)
@@ -142,7 +137,7 @@ namespace MoneyMaker.ViewModels
 
         public void setCapitalGainTax(decimal value)
         {
-            if (ConnectionState == true && manager != null)
+            if (ConnectionState == true)
             {
                 var check = getSettingByKey("capitaltax");
 
@@ -150,7 +145,6 @@ namespace MoneyMaker.ViewModels
                 {
                     db.Settings.InsertOnSubmit(new Settings()
                     {
-                        AccountID = manager.AccountID,
                         key = "capitaltax",
                         value = value.ToString(),
                     });

@@ -9,16 +9,6 @@ namespace MoneyMaker.ViewModels
     public class BankAccountModel : DatabaseModel
     {
 
-        private UserProfile user;
-
-        /// <summary>
-        /// Custom constructor accepts the user
-        /// </summary>
-        public BankAccountModel(UserProfile user)
-        {
-            this.user = user;
-        }
-
         /// <summary>
         /// Returns the bank account of the user
         /// </summary> 
@@ -26,7 +16,7 @@ namespace MoneyMaker.ViewModels
         {
             if (ConnectionState == true)
             { 
-                var query = db.BankAccount.SingleOrDefault(x => x.UserID == user.UserID);
+                var query = db.BankAccount.SingleOrDefault();
                 if (query != null)
                 {
                     return query;

@@ -22,7 +22,7 @@ namespace MoneyMaker.Models.Database
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DataSource")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="LocalDatabase")]
 	public partial class DatabaseClassDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -30,12 +30,21 @@ namespace MoneyMaker.Models.Database
 		
     #region Definitionen der Erweiterungsmethoden
     partial void OnCreated();
+    partial void InsertBankAccount(BankAccount instance);
+    partial void UpdateBankAccount(BankAccount instance);
+    partial void DeleteBankAccount(BankAccount instance);
+    partial void InsertWatchList(WatchList instance);
+    partial void UpdateWatchList(WatchList instance);
+    partial void DeleteWatchList(WatchList instance);
     partial void InsertDepot(Depot instance);
     partial void UpdateDepot(Depot instance);
     partial void DeleteDepot(Depot instance);
     partial void InsertSettings(Settings instance);
     partial void UpdateSettings(Settings instance);
     partial void DeleteSettings(Settings instance);
+    partial void InsertStocks(Stocks instance);
+    partial void UpdateStocks(Stocks instance);
+    partial void DeleteStocks(Stocks instance);
     partial void InsertStocksMap(StocksMap instance);
     partial void UpdateStocksMap(StocksMap instance);
     partial void DeleteStocksMap(StocksMap instance);
@@ -45,37 +54,10 @@ namespace MoneyMaker.Models.Database
     partial void InsertUserLines(UserLines instance);
     partial void UpdateUserLines(UserLines instance);
     partial void DeleteUserLines(UserLines instance);
-    partial void InsertWatchList(WatchList instance);
-    partial void UpdateWatchList(WatchList instance);
-    partial void DeleteWatchList(WatchList instance);
-    partial void InsertBankAccount(BankAccount instance);
-    partial void UpdateBankAccount(BankAccount instance);
-    partial void DeleteBankAccount(BankAccount instance);
-    partial void InsertDeleteMe(DeleteMe instance);
-    partial void UpdateDeleteMe(DeleteMe instance);
-    partial void DeleteDeleteMe(DeleteMe instance);
-    partial void InsertUserProfile(UserProfile instance);
-    partial void UpdateUserProfile(UserProfile instance);
-    partial void DeleteUserProfile(UserProfile instance);
-    partial void InsertLoanData(LoanData instance);
-    partial void UpdateLoanData(LoanData instance);
-    partial void DeleteLoanData(LoanData instance);
-    partial void InsertRedemptionData(RedemptionData instance);
-    partial void UpdateRedemptionData(RedemptionData instance);
-    partial void DeleteRedemptionData(RedemptionData instance);
-    partial void InsertLeasingData(LeasingData instance);
-    partial void UpdateLeasingData(LeasingData instance);
-    partial void DeleteLeasingData(LeasingData instance);
-    partial void InsertManagerProfile(ManagerProfile instance);
-    partial void UpdateManagerProfile(ManagerProfile instance);
-    partial void DeleteManagerProfile(ManagerProfile instance);
-    partial void InsertStocks(Stocks instance);
-    partial void UpdateStocks(Stocks instance);
-    partial void DeleteStocks(Stocks instance);
     #endregion
 		
 		public DatabaseClassDataContext() : 
-				base(global::MoneyMaker.Properties.Settings.Default.DataSourceConnectionString, mappingSource)
+				base(global::MoneyMaker.Properties.Settings.Default.LocalDatabaseConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -104,6 +86,22 @@ namespace MoneyMaker.Models.Database
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<BankAccount> BankAccount
+		{
+			get
+			{
+				return this.GetTable<BankAccount>();
+			}
+		}
+		
+		public System.Data.Linq.Table<WatchList> WatchList
+		{
+			get
+			{
+				return this.GetTable<WatchList>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Depot> Depot
 		{
 			get
@@ -117,6 +115,14 @@ namespace MoneyMaker.Models.Database
 			get
 			{
 				return this.GetTable<Settings>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Stocks> Stocks
+		{
+			get
+			{
+				return this.GetTable<Stocks>();
 			}
 		}
 		
@@ -143,76 +149,204 @@ namespace MoneyMaker.Models.Database
 				return this.GetTable<UserLines>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BankAccount")]
+	public partial class BankAccount : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<WatchList> WatchList
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _BankAccountID;
+		
+		private decimal _AccountBalance;
+		
+		private EntitySet<Transactions> _Transactions;
+		
+    #region Definitionen der Erweiterungsmethoden
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBankAccountIDChanging(int value);
+    partial void OnBankAccountIDChanged();
+    partial void OnAccountBalanceChanging(decimal value);
+    partial void OnAccountBalanceChanged();
+    #endregion
+		
+		public BankAccount()
+		{
+			this._Transactions = new EntitySet<Transactions>(new Action<Transactions>(this.attach_Transactions), new Action<Transactions>(this.detach_Transactions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankAccountID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int BankAccountID
 		{
 			get
 			{
-				return this.GetTable<WatchList>();
+				return this._BankAccountID;
+			}
+			set
+			{
+				if ((this._BankAccountID != value))
+				{
+					this.OnBankAccountIDChanging(value);
+					this.SendPropertyChanging();
+					this._BankAccountID = value;
+					this.SendPropertyChanged("BankAccountID");
+					this.OnBankAccountIDChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<BankAccount> BankAccount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountBalance", DbType="Money NOT NULL")]
+		public decimal AccountBalance
 		{
 			get
 			{
-				return this.GetTable<BankAccount>();
+				return this._AccountBalance;
+			}
+			set
+			{
+				if ((this._AccountBalance != value))
+				{
+					this.OnAccountBalanceChanging(value);
+					this.SendPropertyChanging();
+					this._AccountBalance = value;
+					this.SendPropertyChanged("AccountBalance");
+					this.OnAccountBalanceChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<DeleteMe> DeleteMe
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BankAccount_Transactions", Storage="_Transactions", ThisKey="BankAccountID", OtherKey="BankAccountID")]
+		public EntitySet<Transactions> Transactions
 		{
 			get
 			{
-				return this.GetTable<DeleteMe>();
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
 			}
 		}
 		
-		public System.Data.Linq.Table<UserProfile> UserProfile
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
 		{
-			get
+			if ((this.PropertyChanging != null))
 			{
-				return this.GetTable<UserProfile>();
+				this.PropertyChanging(this, emptyChangingEventArgs);
 			}
 		}
 		
-		public System.Data.Linq.Table<LoanData> LoanData
+		protected virtual void SendPropertyChanged(String propertyName)
 		{
-			get
+			if ((this.PropertyChanged != null))
 			{
-				return this.GetTable<LoanData>();
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 		
-		public System.Data.Linq.Table<RedemptionData> RedemptionData
+		private void attach_Transactions(Transactions entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankAccount = this;
+		}
+		
+		private void detach_Transactions(Transactions entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankAccount = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WatchList")]
+	public partial class WatchList : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _WatchListID;
+		
+		private string _Name;
+		
+    #region Definitionen der Erweiterungsmethoden
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWatchListIDChanging(int value);
+    partial void OnWatchListIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public WatchList()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WatchListID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int WatchListID
 		{
 			get
 			{
-				return this.GetTable<RedemptionData>();
+				return this._WatchListID;
+			}
+			set
+			{
+				if ((this._WatchListID != value))
+				{
+					this.OnWatchListIDChanging(value);
+					this.SendPropertyChanging();
+					this._WatchListID = value;
+					this.SendPropertyChanged("WatchListID");
+					this.OnWatchListIDChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<LeasingData> LeasingData
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		public string Name
 		{
 			get
 			{
-				return this.GetTable<LeasingData>();
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<ManagerProfile> ManagerProfile
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
 		{
-			get
+			if ((this.PropertyChanging != null))
 			{
-				return this.GetTable<ManagerProfile>();
+				this.PropertyChanging(this, emptyChangingEventArgs);
 			}
 		}
 		
-		public System.Data.Linq.Table<Stocks> Stocks
+		protected virtual void SendPropertyChanged(String propertyName)
 		{
-			get
+			if ((this.PropertyChanged != null))
 			{
-				return this.GetTable<Stocks>();
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -225,23 +359,16 @@ namespace MoneyMaker.Models.Database
 		
 		private int _DepotID;
 		
-		private int _UserID;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
     #region Definitionen der Erweiterungsmethoden
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
     partial void OnDepotIDChanging(int value);
     partial void OnDepotIDChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
     #endregion
 		
 		public Depot()
 		{
-			this._UserProfile = default(EntityRef<UserProfile>);
 			OnCreated();
 		}
 		
@@ -261,64 +388,6 @@ namespace MoneyMaker.Models.Database
 					this._DepotID = value;
 					this.SendPropertyChanged("DepotID");
 					this.OnDepotIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_Depot", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.Depot.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.Depot.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
 				}
 			}
 		}
@@ -358,8 +427,6 @@ namespace MoneyMaker.Models.Database
 		
 		private string _value;
 		
-		private EntityRef<ManagerProfile> _ManagerProfile;
-		
     #region Definitionen der Erweiterungsmethoden
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -376,7 +443,6 @@ namespace MoneyMaker.Models.Database
 		
 		public Settings()
 		{
-			this._ManagerProfile = default(EntityRef<ManagerProfile>);
 			OnCreated();
 		}
 		
@@ -411,10 +477,6 @@ namespace MoneyMaker.Models.Database
 			{
 				if ((this._AccountID != value))
 				{
-					if (this._ManagerProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnAccountIDChanging(value);
 					this.SendPropertyChanging();
 					this._AccountID = value;
@@ -464,37 +526,177 @@ namespace MoneyMaker.Models.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ManagerProfile_Settings", Storage="_ManagerProfile", ThisKey="AccountID", OtherKey="AccountID", IsForeignKey=true)]
-		public ManagerProfile ManagerProfile
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Stocks")]
+	public partial class Stocks : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _StockID;
+		
+		private string _Name;
+		
+		private string _Symbol;
+		
+		private string _StockExchange;
+		
+		private string _Typ;
+		
+		private EntitySet<StocksMap> _StocksMap;
+		
+    #region Definitionen der Erweiterungsmethoden
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStockIDChanging(int value);
+    partial void OnStockIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnSymbolChanging(string value);
+    partial void OnSymbolChanged();
+    partial void OnStockExchangeChanging(string value);
+    partial void OnStockExchangeChanged();
+    partial void OnTypChanging(string value);
+    partial void OnTypChanged();
+    #endregion
+		
+		public Stocks()
+		{
+			this._StocksMap = new EntitySet<StocksMap>(new Action<StocksMap>(this.attach_StocksMap), new Action<StocksMap>(this.detach_StocksMap));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StockID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int StockID
 		{
 			get
 			{
-				return this._ManagerProfile.Entity;
+				return this._StockID;
 			}
 			set
 			{
-				ManagerProfile previousValue = this._ManagerProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._ManagerProfile.HasLoadedOrAssignedValue == false)))
+				if ((this._StockID != value))
 				{
+					this.OnStockIDChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ManagerProfile.Entity = null;
-						previousValue.Settings.Remove(this);
-					}
-					this._ManagerProfile.Entity = value;
-					if ((value != null))
-					{
-						value.Settings.Add(this);
-						this._AccountID = value.AccountID;
-					}
-					else
-					{
-						this._AccountID = default(int);
-					}
-					this.SendPropertyChanged("ManagerProfile");
+					this._StockID = value;
+					this.SendPropertyChanged("StockID");
+					this.OnStockIDChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Symbol", DbType="VarChar(50)")]
+		public string Symbol
+		{
+			get
+			{
+				return this._Symbol;
+			}
+			set
+			{
+				if ((this._Symbol != value))
+				{
+					this.OnSymbolChanging(value);
+					this.SendPropertyChanging();
+					this._Symbol = value;
+					this.SendPropertyChanged("Symbol");
+					this.OnSymbolChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StockExchange", DbType="VarChar(10)")]
+		public string StockExchange
+		{
+			get
+			{
+				return this._StockExchange;
+			}
+			set
+			{
+				if ((this._StockExchange != value))
+				{
+					this.OnStockExchangeChanging(value);
+					this.SendPropertyChanging();
+					this._StockExchange = value;
+					this.SendPropertyChanged("StockExchange");
+					this.OnStockExchangeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Typ", DbType="VarChar(50)")]
+		public string Typ
+		{
+			get
+			{
+				return this._Typ;
+			}
+			set
+			{
+				if ((this._Typ != value))
+				{
+					this.OnTypChanging(value);
+					this.SendPropertyChanging();
+					this._Typ = value;
+					this.SendPropertyChanged("Typ");
+					this.OnTypChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stocks_StocksMap", Storage="_StocksMap", ThisKey="StockID", OtherKey="StockID")]
+		public EntitySet<StocksMap> StocksMap
+		{
+			get
+			{
+				return this._StocksMap;
+			}
+			set
+			{
+				this._StocksMap.Assign(value);
 			}
 		}
 		
@@ -516,6 +718,18 @@ namespace MoneyMaker.Models.Database
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_StocksMap(StocksMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Stocks = this;
+		}
+		
+		private void detach_StocksMap(StocksMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Stocks = null;
 		}
 	}
 	
@@ -1037,13 +1251,9 @@ namespace MoneyMaker.Models.Database
 		
 		private string _LineColor;
 		
-		private int _UserID;
-		
-		private System.Nullable<short> _Thickness;
+		private short _Thickness;
 		
 		private EntityRef<StocksMap> _StocksMap;
-		
-		private EntityRef<UserProfile> _UserProfile;
 		
     #region Definitionen der Erweiterungsmethoden
     partial void OnLoaded();
@@ -1063,16 +1273,13 @@ namespace MoneyMaker.Models.Database
     partial void OnTimePoint2Changed();
     partial void OnLineColorChanging(string value);
     partial void OnLineColorChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnThicknessChanging(System.Nullable<short> value);
+    partial void OnThicknessChanging(short value);
     partial void OnThicknessChanged();
     #endregion
 		
 		public UserLines()
 		{
 			this._StocksMap = default(EntityRef<StocksMap>);
-			this._UserProfile = default(EntityRef<UserProfile>);
 			OnCreated();
 		}
 		
@@ -1220,32 +1427,8 @@ namespace MoneyMaker.Models.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Thickness", DbType="SmallInt")]
-		public System.Nullable<short> Thickness
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Thickness", DbType="SmallInt NOT NULL")]
+		public short Thickness
 		{
 			get
 			{
@@ -1298,40 +1481,6 @@ namespace MoneyMaker.Models.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_UserLines", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.UserLines.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.UserLines.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1350,2606 +1499,6 @@ namespace MoneyMaker.Models.Database
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WatchList")]
-	public partial class WatchList : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _WatchListID;
-		
-		private string _Name;
-		
-		private int _UserID;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnWatchListIDChanging(int value);
-    partial void OnWatchListIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    #endregion
-		
-		public WatchList()
-		{
-			this._UserProfile = default(EntityRef<UserProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WatchListID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int WatchListID
-		{
-			get
-			{
-				return this._WatchListID;
-			}
-			set
-			{
-				if ((this._WatchListID != value))
-				{
-					this.OnWatchListIDChanging(value);
-					this.SendPropertyChanging();
-					this._WatchListID = value;
-					this.SendPropertyChanged("WatchListID");
-					this.OnWatchListIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_WatchList", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.WatchList.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.WatchList.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BankAccount")]
-	public partial class BankAccount : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _BankAccountID;
-		
-		private decimal _AccountBalance;
-		
-		private int _UserID;
-		
-		private EntitySet<Transactions> _Transactions;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnBankAccountIDChanging(int value);
-    partial void OnBankAccountIDChanged();
-    partial void OnAccountBalanceChanging(decimal value);
-    partial void OnAccountBalanceChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    #endregion
-		
-		public BankAccount()
-		{
-			this._Transactions = new EntitySet<Transactions>(new Action<Transactions>(this.attach_Transactions), new Action<Transactions>(this.detach_Transactions));
-			this._UserProfile = default(EntityRef<UserProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankAccountID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int BankAccountID
-		{
-			get
-			{
-				return this._BankAccountID;
-			}
-			set
-			{
-				if ((this._BankAccountID != value))
-				{
-					this.OnBankAccountIDChanging(value);
-					this.SendPropertyChanging();
-					this._BankAccountID = value;
-					this.SendPropertyChanged("BankAccountID");
-					this.OnBankAccountIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountBalance", DbType="Money NOT NULL")]
-		public decimal AccountBalance
-		{
-			get
-			{
-				return this._AccountBalance;
-			}
-			set
-			{
-				if ((this._AccountBalance != value))
-				{
-					this.OnAccountBalanceChanging(value);
-					this.SendPropertyChanging();
-					this._AccountBalance = value;
-					this.SendPropertyChanged("AccountBalance");
-					this.OnAccountBalanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BankAccount_Transactions", Storage="_Transactions", ThisKey="BankAccountID", OtherKey="BankAccountID")]
-		public EntitySet<Transactions> Transactions
-		{
-			get
-			{
-				return this._Transactions;
-			}
-			set
-			{
-				this._Transactions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_BankAccount", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.BankAccount.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.BankAccount.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Transactions(Transactions entity)
-		{
-			this.SendPropertyChanging();
-			entity.BankAccount = this;
-		}
-		
-		private void detach_Transactions(Transactions entity)
-		{
-			this.SendPropertyChanging();
-			entity.BankAccount = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DeleteMe")]
-	public partial class DeleteMe : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    #endregion
-		
-		public DeleteMe()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserProfile")]
-	public partial class UserProfile : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UserID;
-		
-		private string _ForName;
-		
-		private string _LastName;
-		
-		private string _Town;
-		
-		private int _AccountID;
-		
-		private string _Street;
-		
-		private string _StreetNumber;
-		
-		private string _Postcode;
-		
-		private string _PhoneNumber;
-		
-		private System.Data.Linq.Binary _ProfilePicture;
-		
-		private EntitySet<Depot> _Depot;
-		
-		private EntitySet<UserLines> _UserLines;
-		
-		private EntitySet<WatchList> _WatchList;
-		
-		private EntitySet<BankAccount> _BankAccount;
-		
-		private EntitySet<LoanData> _LoanData;
-		
-		private EntitySet<RedemptionData> _RedemptionData;
-		
-		private EntitySet<LeasingData> _LeasingData;
-		
-		private EntityRef<ManagerProfile> _ManagerProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnForNameChanging(string value);
-    partial void OnForNameChanged();
-    partial void OnLastNameChanging(string value);
-    partial void OnLastNameChanged();
-    partial void OnTownChanging(string value);
-    partial void OnTownChanged();
-    partial void OnAccountIDChanging(int value);
-    partial void OnAccountIDChanged();
-    partial void OnStreetChanging(string value);
-    partial void OnStreetChanged();
-    partial void OnStreetNumberChanging(string value);
-    partial void OnStreetNumberChanged();
-    partial void OnPostcodeChanging(string value);
-    partial void OnPostcodeChanged();
-    partial void OnPhoneNumberChanging(string value);
-    partial void OnPhoneNumberChanged();
-    partial void OnProfilePictureChanging(System.Data.Linq.Binary value);
-    partial void OnProfilePictureChanged();
-    #endregion
-		
-		public UserProfile()
-		{
-			this._Depot = new EntitySet<Depot>(new Action<Depot>(this.attach_Depot), new Action<Depot>(this.detach_Depot));
-			this._UserLines = new EntitySet<UserLines>(new Action<UserLines>(this.attach_UserLines), new Action<UserLines>(this.detach_UserLines));
-			this._WatchList = new EntitySet<WatchList>(new Action<WatchList>(this.attach_WatchList), new Action<WatchList>(this.detach_WatchList));
-			this._BankAccount = new EntitySet<BankAccount>(new Action<BankAccount>(this.attach_BankAccount), new Action<BankAccount>(this.detach_BankAccount));
-			this._LoanData = new EntitySet<LoanData>(new Action<LoanData>(this.attach_LoanData), new Action<LoanData>(this.detach_LoanData));
-			this._RedemptionData = new EntitySet<RedemptionData>(new Action<RedemptionData>(this.attach_RedemptionData), new Action<RedemptionData>(this.detach_RedemptionData));
-			this._LeasingData = new EntitySet<LeasingData>(new Action<LeasingData>(this.attach_LeasingData), new Action<LeasingData>(this.detach_LeasingData));
-			this._ManagerProfile = default(EntityRef<ManagerProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForName", DbType="VarChar(50)")]
-		public string ForName
-		{
-			get
-			{
-				return this._ForName;
-			}
-			set
-			{
-				if ((this._ForName != value))
-				{
-					this.OnForNameChanging(value);
-					this.SendPropertyChanging();
-					this._ForName = value;
-					this.SendPropertyChanged("ForName");
-					this.OnForNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string LastName
-		{
-			get
-			{
-				return this._LastName;
-			}
-			set
-			{
-				if ((this._LastName != value))
-				{
-					this.OnLastNameChanging(value);
-					this.SendPropertyChanging();
-					this._LastName = value;
-					this.SendPropertyChanged("LastName");
-					this.OnLastNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Town", DbType="VarChar(100)")]
-		public string Town
-		{
-			get
-			{
-				return this._Town;
-			}
-			set
-			{
-				if ((this._Town != value))
-				{
-					this.OnTownChanging(value);
-					this.SendPropertyChanging();
-					this._Town = value;
-					this.SendPropertyChanged("Town");
-					this.OnTownChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountID", DbType="Int NOT NULL")]
-		public int AccountID
-		{
-			get
-			{
-				return this._AccountID;
-			}
-			set
-			{
-				if ((this._AccountID != value))
-				{
-					if (this._ManagerProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAccountIDChanging(value);
-					this.SendPropertyChanging();
-					this._AccountID = value;
-					this.SendPropertyChanged("AccountID");
-					this.OnAccountIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Street", DbType="VarChar(100)")]
-		public string Street
-		{
-			get
-			{
-				return this._Street;
-			}
-			set
-			{
-				if ((this._Street != value))
-				{
-					this.OnStreetChanging(value);
-					this.SendPropertyChanging();
-					this._Street = value;
-					this.SendPropertyChanged("Street");
-					this.OnStreetChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StreetNumber", DbType="VarChar(50)")]
-		public string StreetNumber
-		{
-			get
-			{
-				return this._StreetNumber;
-			}
-			set
-			{
-				if ((this._StreetNumber != value))
-				{
-					this.OnStreetNumberChanging(value);
-					this.SendPropertyChanging();
-					this._StreetNumber = value;
-					this.SendPropertyChanged("StreetNumber");
-					this.OnStreetNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Postcode", DbType="VarChar(50)")]
-		public string Postcode
-		{
-			get
-			{
-				return this._Postcode;
-			}
-			set
-			{
-				if ((this._Postcode != value))
-				{
-					this.OnPostcodeChanging(value);
-					this.SendPropertyChanging();
-					this._Postcode = value;
-					this.SendPropertyChanged("Postcode");
-					this.OnPostcodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="VarChar(50)")]
-		public string PhoneNumber
-		{
-			get
-			{
-				return this._PhoneNumber;
-			}
-			set
-			{
-				if ((this._PhoneNumber != value))
-				{
-					this.OnPhoneNumberChanging(value);
-					this.SendPropertyChanging();
-					this._PhoneNumber = value;
-					this.SendPropertyChanged("PhoneNumber");
-					this.OnPhoneNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProfilePicture", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary ProfilePicture
-		{
-			get
-			{
-				return this._ProfilePicture;
-			}
-			set
-			{
-				if ((this._ProfilePicture != value))
-				{
-					this.OnProfilePictureChanging(value);
-					this.SendPropertyChanging();
-					this._ProfilePicture = value;
-					this.SendPropertyChanged("ProfilePicture");
-					this.OnProfilePictureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_Depot", Storage="_Depot", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<Depot> Depot
-		{
-			get
-			{
-				return this._Depot;
-			}
-			set
-			{
-				this._Depot.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_UserLines", Storage="_UserLines", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<UserLines> UserLines
-		{
-			get
-			{
-				return this._UserLines;
-			}
-			set
-			{
-				this._UserLines.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_WatchList", Storage="_WatchList", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<WatchList> WatchList
-		{
-			get
-			{
-				return this._WatchList;
-			}
-			set
-			{
-				this._WatchList.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_BankAccount", Storage="_BankAccount", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<BankAccount> BankAccount
-		{
-			get
-			{
-				return this._BankAccount;
-			}
-			set
-			{
-				this._BankAccount.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_LoanData", Storage="_LoanData", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<LoanData> LoanData
-		{
-			get
-			{
-				return this._LoanData;
-			}
-			set
-			{
-				this._LoanData.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_RedemptionData", Storage="_RedemptionData", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<RedemptionData> RedemptionData
-		{
-			get
-			{
-				return this._RedemptionData;
-			}
-			set
-			{
-				this._RedemptionData.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_LeasingData", Storage="_LeasingData", ThisKey="UserID", OtherKey="UserID")]
-		public EntitySet<LeasingData> LeasingData
-		{
-			get
-			{
-				return this._LeasingData;
-			}
-			set
-			{
-				this._LeasingData.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ManagerProfile_UserProfile", Storage="_ManagerProfile", ThisKey="AccountID", OtherKey="AccountID", IsForeignKey=true)]
-		public ManagerProfile ManagerProfile
-		{
-			get
-			{
-				return this._ManagerProfile.Entity;
-			}
-			set
-			{
-				ManagerProfile previousValue = this._ManagerProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._ManagerProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ManagerProfile.Entity = null;
-						previousValue.UserProfile.Remove(this);
-					}
-					this._ManagerProfile.Entity = value;
-					if ((value != null))
-					{
-						value.UserProfile.Add(this);
-						this._AccountID = value.AccountID;
-					}
-					else
-					{
-						this._AccountID = default(int);
-					}
-					this.SendPropertyChanged("ManagerProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Depot(Depot entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_Depot(Depot entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_UserLines(UserLines entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_UserLines(UserLines entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_WatchList(WatchList entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_WatchList(WatchList entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_BankAccount(BankAccount entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_BankAccount(BankAccount entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_LoanData(LoanData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_LoanData(LoanData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_RedemptionData(RedemptionData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_RedemptionData(RedemptionData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-		
-		private void attach_LeasingData(LeasingData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = this;
-		}
-		
-		private void detach_LeasingData(LeasingData entity)
-		{
-			this.SendPropertyChanging();
-			entity.UserProfile = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LoanData")]
-	public partial class LoanData : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _LoanID;
-		
-		private string _loanName;
-		
-		private System.Nullable<double> _loanAmount;
-		
-		private System.Nullable<double> _processingFee;
-		
-		private System.Nullable<double> _interestRate;
-		
-		private System.Nullable<double> _repaymentRate;
-		
-		private System.Nullable<int> _repaymentRateInterval;
-		
-		private System.Nullable<int> _durationMode;
-		
-		private System.Nullable<int> _calculateOption;
-		
-		private int _UserID;
-		
-		private System.Nullable<System.DateTime> _created;
-		
-		private System.Nullable<double> _duration;
-		
-		private System.Nullable<double> _totalExpense;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnLoanIDChanging(int value);
-    partial void OnLoanIDChanged();
-    partial void OnloanNameChanging(string value);
-    partial void OnloanNameChanged();
-    partial void OnloanAmountChanging(System.Nullable<double> value);
-    partial void OnloanAmountChanged();
-    partial void OnprocessingFeeChanging(System.Nullable<double> value);
-    partial void OnprocessingFeeChanged();
-    partial void OninterestRateChanging(System.Nullable<double> value);
-    partial void OninterestRateChanged();
-    partial void OnrepaymentRateChanging(System.Nullable<double> value);
-    partial void OnrepaymentRateChanged();
-    partial void OnrepaymentRateIntervalChanging(System.Nullable<int> value);
-    partial void OnrepaymentRateIntervalChanged();
-    partial void OndurationModeChanging(System.Nullable<int> value);
-    partial void OndurationModeChanged();
-    partial void OncalculateOptionChanging(System.Nullable<int> value);
-    partial void OncalculateOptionChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OncreatedChanging(System.Nullable<System.DateTime> value);
-    partial void OncreatedChanged();
-    partial void OndurationChanging(System.Nullable<double> value);
-    partial void OndurationChanged();
-    partial void OntotalExpenseChanging(System.Nullable<double> value);
-    partial void OntotalExpenseChanged();
-    #endregion
-		
-		public LoanData()
-		{
-			this._UserProfile = default(EntityRef<UserProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int LoanID
-		{
-			get
-			{
-				return this._LoanID;
-			}
-			set
-			{
-				if ((this._LoanID != value))
-				{
-					this.OnLoanIDChanging(value);
-					this.SendPropertyChanging();
-					this._LoanID = value;
-					this.SendPropertyChanged("LoanID");
-					this.OnLoanIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_loanName", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string loanName
-		{
-			get
-			{
-				return this._loanName;
-			}
-			set
-			{
-				if ((this._loanName != value))
-				{
-					this.OnloanNameChanging(value);
-					this.SendPropertyChanging();
-					this._loanName = value;
-					this.SendPropertyChanged("loanName");
-					this.OnloanNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_loanAmount", DbType="Float")]
-		public System.Nullable<double> loanAmount
-		{
-			get
-			{
-				return this._loanAmount;
-			}
-			set
-			{
-				if ((this._loanAmount != value))
-				{
-					this.OnloanAmountChanging(value);
-					this.SendPropertyChanging();
-					this._loanAmount = value;
-					this.SendPropertyChanged("loanAmount");
-					this.OnloanAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_processingFee", DbType="Float")]
-		public System.Nullable<double> processingFee
-		{
-			get
-			{
-				return this._processingFee;
-			}
-			set
-			{
-				if ((this._processingFee != value))
-				{
-					this.OnprocessingFeeChanging(value);
-					this.SendPropertyChanging();
-					this._processingFee = value;
-					this.SendPropertyChanged("processingFee");
-					this.OnprocessingFeeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_interestRate", DbType="Float")]
-		public System.Nullable<double> interestRate
-		{
-			get
-			{
-				return this._interestRate;
-			}
-			set
-			{
-				if ((this._interestRate != value))
-				{
-					this.OninterestRateChanging(value);
-					this.SendPropertyChanging();
-					this._interestRate = value;
-					this.SendPropertyChanged("interestRate");
-					this.OninterestRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_repaymentRate", DbType="Float")]
-		public System.Nullable<double> repaymentRate
-		{
-			get
-			{
-				return this._repaymentRate;
-			}
-			set
-			{
-				if ((this._repaymentRate != value))
-				{
-					this.OnrepaymentRateChanging(value);
-					this.SendPropertyChanging();
-					this._repaymentRate = value;
-					this.SendPropertyChanged("repaymentRate");
-					this.OnrepaymentRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_repaymentRateInterval", DbType="Int")]
-		public System.Nullable<int> repaymentRateInterval
-		{
-			get
-			{
-				return this._repaymentRateInterval;
-			}
-			set
-			{
-				if ((this._repaymentRateInterval != value))
-				{
-					this.OnrepaymentRateIntervalChanging(value);
-					this.SendPropertyChanging();
-					this._repaymentRateInterval = value;
-					this.SendPropertyChanged("repaymentRateInterval");
-					this.OnrepaymentRateIntervalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_durationMode", DbType="Int")]
-		public System.Nullable<int> durationMode
-		{
-			get
-			{
-				return this._durationMode;
-			}
-			set
-			{
-				if ((this._durationMode != value))
-				{
-					this.OndurationModeChanging(value);
-					this.SendPropertyChanging();
-					this._durationMode = value;
-					this.SendPropertyChanged("durationMode");
-					this.OndurationModeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calculateOption", DbType="Int")]
-		public System.Nullable<int> calculateOption
-		{
-			get
-			{
-				return this._calculateOption;
-			}
-			set
-			{
-				if ((this._calculateOption != value))
-				{
-					this.OncalculateOptionChanging(value);
-					this.SendPropertyChanging();
-					this._calculateOption = value;
-					this.SendPropertyChanged("calculateOption");
-					this.OncalculateOptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created
-		{
-			get
-			{
-				return this._created;
-			}
-			set
-			{
-				if ((this._created != value))
-				{
-					this.OncreatedChanging(value);
-					this.SendPropertyChanging();
-					this._created = value;
-					this.SendPropertyChanged("created");
-					this.OncreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_duration", DbType="Float")]
-		public System.Nullable<double> duration
-		{
-			get
-			{
-				return this._duration;
-			}
-			set
-			{
-				if ((this._duration != value))
-				{
-					this.OndurationChanging(value);
-					this.SendPropertyChanging();
-					this._duration = value;
-					this.SendPropertyChanged("duration");
-					this.OndurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_totalExpense", DbType="Float")]
-		public System.Nullable<double> totalExpense
-		{
-			get
-			{
-				return this._totalExpense;
-			}
-			set
-			{
-				if ((this._totalExpense != value))
-				{
-					this.OntotalExpenseChanging(value);
-					this.SendPropertyChanging();
-					this._totalExpense = value;
-					this.SendPropertyChanged("totalExpense");
-					this.OntotalExpenseChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_LoanData", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.LoanData.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.LoanData.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RedemptionData")]
-	public partial class RedemptionData : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _RedemptionID;
-		
-		private System.Nullable<double> _loanAmount;
-		
-		private System.Nullable<double> _interestRate;
-		
-		private System.Nullable<int> _interestRateInterval;
-		
-		private System.Nullable<double> _redemptionRate;
-		
-		private System.Nullable<int> _redemptionRateInterval;
-		
-		private System.Nullable<double> _redemptionDuration;
-		
-		private System.Nullable<int> _redemptionDurationMode;
-		
-		private System.Nullable<double> _remainingDebt;
-		
-		private System.Nullable<int> _calculateOption;
-		
-		private System.Nullable<double> _totalExpense;
-		
-		private int _UserID;
-		
-		private string _redemptionName;
-		
-		private System.DateTime _created;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRedemptionIDChanging(int value);
-    partial void OnRedemptionIDChanged();
-    partial void OnloanAmountChanging(System.Nullable<double> value);
-    partial void OnloanAmountChanged();
-    partial void OninterestRateChanging(System.Nullable<double> value);
-    partial void OninterestRateChanged();
-    partial void OninterestRateIntervalChanging(System.Nullable<int> value);
-    partial void OninterestRateIntervalChanged();
-    partial void OnredemptionRateChanging(System.Nullable<double> value);
-    partial void OnredemptionRateChanged();
-    partial void OnredemptionRateIntervalChanging(System.Nullable<int> value);
-    partial void OnredemptionRateIntervalChanged();
-    partial void OnredemptionDurationChanging(System.Nullable<double> value);
-    partial void OnredemptionDurationChanged();
-    partial void OnredemptionDurationModeChanging(System.Nullable<int> value);
-    partial void OnredemptionDurationModeChanged();
-    partial void OnremainingDebtChanging(System.Nullable<double> value);
-    partial void OnremainingDebtChanged();
-    partial void OncalculateOptionChanging(System.Nullable<int> value);
-    partial void OncalculateOptionChanged();
-    partial void OntotalExpenseChanging(System.Nullable<double> value);
-    partial void OntotalExpenseChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnredemptionNameChanging(string value);
-    partial void OnredemptionNameChanged();
-    partial void OncreatedChanging(System.DateTime value);
-    partial void OncreatedChanged();
-    #endregion
-		
-		public RedemptionData()
-		{
-			this._UserProfile = default(EntityRef<UserProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RedemptionID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RedemptionID
-		{
-			get
-			{
-				return this._RedemptionID;
-			}
-			set
-			{
-				if ((this._RedemptionID != value))
-				{
-					this.OnRedemptionIDChanging(value);
-					this.SendPropertyChanging();
-					this._RedemptionID = value;
-					this.SendPropertyChanged("RedemptionID");
-					this.OnRedemptionIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_loanAmount", DbType="Float")]
-		public System.Nullable<double> loanAmount
-		{
-			get
-			{
-				return this._loanAmount;
-			}
-			set
-			{
-				if ((this._loanAmount != value))
-				{
-					this.OnloanAmountChanging(value);
-					this.SendPropertyChanging();
-					this._loanAmount = value;
-					this.SendPropertyChanged("loanAmount");
-					this.OnloanAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_interestRate", DbType="Float")]
-		public System.Nullable<double> interestRate
-		{
-			get
-			{
-				return this._interestRate;
-			}
-			set
-			{
-				if ((this._interestRate != value))
-				{
-					this.OninterestRateChanging(value);
-					this.SendPropertyChanging();
-					this._interestRate = value;
-					this.SendPropertyChanged("interestRate");
-					this.OninterestRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_interestRateInterval", DbType="Int")]
-		public System.Nullable<int> interestRateInterval
-		{
-			get
-			{
-				return this._interestRateInterval;
-			}
-			set
-			{
-				if ((this._interestRateInterval != value))
-				{
-					this.OninterestRateIntervalChanging(value);
-					this.SendPropertyChanging();
-					this._interestRateInterval = value;
-					this.SendPropertyChanged("interestRateInterval");
-					this.OninterestRateIntervalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_redemptionRate", DbType="Float")]
-		public System.Nullable<double> redemptionRate
-		{
-			get
-			{
-				return this._redemptionRate;
-			}
-			set
-			{
-				if ((this._redemptionRate != value))
-				{
-					this.OnredemptionRateChanging(value);
-					this.SendPropertyChanging();
-					this._redemptionRate = value;
-					this.SendPropertyChanged("redemptionRate");
-					this.OnredemptionRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_redemptionRateInterval", DbType="Int")]
-		public System.Nullable<int> redemptionRateInterval
-		{
-			get
-			{
-				return this._redemptionRateInterval;
-			}
-			set
-			{
-				if ((this._redemptionRateInterval != value))
-				{
-					this.OnredemptionRateIntervalChanging(value);
-					this.SendPropertyChanging();
-					this._redemptionRateInterval = value;
-					this.SendPropertyChanged("redemptionRateInterval");
-					this.OnredemptionRateIntervalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_redemptionDuration", DbType="Float")]
-		public System.Nullable<double> redemptionDuration
-		{
-			get
-			{
-				return this._redemptionDuration;
-			}
-			set
-			{
-				if ((this._redemptionDuration != value))
-				{
-					this.OnredemptionDurationChanging(value);
-					this.SendPropertyChanging();
-					this._redemptionDuration = value;
-					this.SendPropertyChanged("redemptionDuration");
-					this.OnredemptionDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_redemptionDurationMode", DbType="Int")]
-		public System.Nullable<int> redemptionDurationMode
-		{
-			get
-			{
-				return this._redemptionDurationMode;
-			}
-			set
-			{
-				if ((this._redemptionDurationMode != value))
-				{
-					this.OnredemptionDurationModeChanging(value);
-					this.SendPropertyChanging();
-					this._redemptionDurationMode = value;
-					this.SendPropertyChanged("redemptionDurationMode");
-					this.OnredemptionDurationModeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remainingDebt", DbType="Float")]
-		public System.Nullable<double> remainingDebt
-		{
-			get
-			{
-				return this._remainingDebt;
-			}
-			set
-			{
-				if ((this._remainingDebt != value))
-				{
-					this.OnremainingDebtChanging(value);
-					this.SendPropertyChanging();
-					this._remainingDebt = value;
-					this.SendPropertyChanged("remainingDebt");
-					this.OnremainingDebtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calculateOption", DbType="Int")]
-		public System.Nullable<int> calculateOption
-		{
-			get
-			{
-				return this._calculateOption;
-			}
-			set
-			{
-				if ((this._calculateOption != value))
-				{
-					this.OncalculateOptionChanging(value);
-					this.SendPropertyChanging();
-					this._calculateOption = value;
-					this.SendPropertyChanged("calculateOption");
-					this.OncalculateOptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_totalExpense", DbType="Float")]
-		public System.Nullable<double> totalExpense
-		{
-			get
-			{
-				return this._totalExpense;
-			}
-			set
-			{
-				if ((this._totalExpense != value))
-				{
-					this.OntotalExpenseChanging(value);
-					this.SendPropertyChanging();
-					this._totalExpense = value;
-					this.SendPropertyChanged("totalExpense");
-					this.OntotalExpenseChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_redemptionName", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string redemptionName
-		{
-			get
-			{
-				return this._redemptionName;
-			}
-			set
-			{
-				if ((this._redemptionName != value))
-				{
-					this.OnredemptionNameChanging(value);
-					this.SendPropertyChanging();
-					this._redemptionName = value;
-					this.SendPropertyChanged("redemptionName");
-					this.OnredemptionNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created", DbType="DateTime NOT NULL")]
-		public System.DateTime created
-		{
-			get
-			{
-				return this._created;
-			}
-			set
-			{
-				if ((this._created != value))
-				{
-					this.OncreatedChanging(value);
-					this.SendPropertyChanging();
-					this._created = value;
-					this.SendPropertyChanged("created");
-					this.OncreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_RedemptionData", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.RedemptionData.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.RedemptionData.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LeasingData")]
-	public partial class LeasingData : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _LeasingID;
-		
-		private System.Nullable<double> _interestRate;
-		
-		private System.Nullable<int> _calculateOption;
-		
-		private System.Nullable<int> _interestRateOption;
-		
-		private System.Nullable<double> _leasingRate;
-		
-		private System.Nullable<double> _deposit;
-		
-		private System.Nullable<double> _startValue;
-		
-		private System.Nullable<int> _leasingRateInterval;
-		
-		private System.Nullable<int> _modeOfPayment;
-		
-		private System.Nullable<double> _duration;
-		
-		private System.Nullable<int> _durationMode;
-		
-		private System.Nullable<double> _recoveryValue;
-		
-		private int _UserID;
-		
-		private string _leasingName;
-		
-		private System.Nullable<System.DateTime> _created;
-		
-		private System.Nullable<double> _totalExpense;
-		
-		private System.Nullable<double> _totalInterest;
-		
-		private EntityRef<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnLeasingIDChanging(int value);
-    partial void OnLeasingIDChanged();
-    partial void OninterestRateChanging(System.Nullable<double> value);
-    partial void OninterestRateChanged();
-    partial void OncalculateOptionChanging(System.Nullable<int> value);
-    partial void OncalculateOptionChanged();
-    partial void OninterestRateOptionChanging(System.Nullable<int> value);
-    partial void OninterestRateOptionChanged();
-    partial void OnleasingRateChanging(System.Nullable<double> value);
-    partial void OnleasingRateChanged();
-    partial void OndepositChanging(System.Nullable<double> value);
-    partial void OndepositChanged();
-    partial void OnstartValueChanging(System.Nullable<double> value);
-    partial void OnstartValueChanged();
-    partial void OnleasingRateIntervalChanging(System.Nullable<int> value);
-    partial void OnleasingRateIntervalChanged();
-    partial void OnmodeOfPaymentChanging(System.Nullable<int> value);
-    partial void OnmodeOfPaymentChanged();
-    partial void OndurationChanging(System.Nullable<double> value);
-    partial void OndurationChanged();
-    partial void OndurationModeChanging(System.Nullable<int> value);
-    partial void OndurationModeChanged();
-    partial void OnrecoveryValueChanging(System.Nullable<double> value);
-    partial void OnrecoveryValueChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnleasingNameChanging(string value);
-    partial void OnleasingNameChanged();
-    partial void OncreatedChanging(System.Nullable<System.DateTime> value);
-    partial void OncreatedChanged();
-    partial void OntotalExpenseChanging(System.Nullable<double> value);
-    partial void OntotalExpenseChanged();
-    partial void OntotalInterestChanging(System.Nullable<double> value);
-    partial void OntotalInterestChanged();
-    #endregion
-		
-		public LeasingData()
-		{
-			this._UserProfile = default(EntityRef<UserProfile>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeasingID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int LeasingID
-		{
-			get
-			{
-				return this._LeasingID;
-			}
-			set
-			{
-				if ((this._LeasingID != value))
-				{
-					this.OnLeasingIDChanging(value);
-					this.SendPropertyChanging();
-					this._LeasingID = value;
-					this.SendPropertyChanged("LeasingID");
-					this.OnLeasingIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_interestRate", DbType="Float")]
-		public System.Nullable<double> interestRate
-		{
-			get
-			{
-				return this._interestRate;
-			}
-			set
-			{
-				if ((this._interestRate != value))
-				{
-					this.OninterestRateChanging(value);
-					this.SendPropertyChanging();
-					this._interestRate = value;
-					this.SendPropertyChanged("interestRate");
-					this.OninterestRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calculateOption", DbType="Int")]
-		public System.Nullable<int> calculateOption
-		{
-			get
-			{
-				return this._calculateOption;
-			}
-			set
-			{
-				if ((this._calculateOption != value))
-				{
-					this.OncalculateOptionChanging(value);
-					this.SendPropertyChanging();
-					this._calculateOption = value;
-					this.SendPropertyChanged("calculateOption");
-					this.OncalculateOptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_interestRateOption", DbType="Int")]
-		public System.Nullable<int> interestRateOption
-		{
-			get
-			{
-				return this._interestRateOption;
-			}
-			set
-			{
-				if ((this._interestRateOption != value))
-				{
-					this.OninterestRateOptionChanging(value);
-					this.SendPropertyChanging();
-					this._interestRateOption = value;
-					this.SendPropertyChanged("interestRateOption");
-					this.OninterestRateOptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_leasingRate", DbType="Float")]
-		public System.Nullable<double> leasingRate
-		{
-			get
-			{
-				return this._leasingRate;
-			}
-			set
-			{
-				if ((this._leasingRate != value))
-				{
-					this.OnleasingRateChanging(value);
-					this.SendPropertyChanging();
-					this._leasingRate = value;
-					this.SendPropertyChanged("leasingRate");
-					this.OnleasingRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_deposit", DbType="Float")]
-		public System.Nullable<double> deposit
-		{
-			get
-			{
-				return this._deposit;
-			}
-			set
-			{
-				if ((this._deposit != value))
-				{
-					this.OndepositChanging(value);
-					this.SendPropertyChanging();
-					this._deposit = value;
-					this.SendPropertyChanged("deposit");
-					this.OndepositChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startValue", DbType="Float")]
-		public System.Nullable<double> startValue
-		{
-			get
-			{
-				return this._startValue;
-			}
-			set
-			{
-				if ((this._startValue != value))
-				{
-					this.OnstartValueChanging(value);
-					this.SendPropertyChanging();
-					this._startValue = value;
-					this.SendPropertyChanged("startValue");
-					this.OnstartValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_leasingRateInterval", DbType="Int")]
-		public System.Nullable<int> leasingRateInterval
-		{
-			get
-			{
-				return this._leasingRateInterval;
-			}
-			set
-			{
-				if ((this._leasingRateInterval != value))
-				{
-					this.OnleasingRateIntervalChanging(value);
-					this.SendPropertyChanging();
-					this._leasingRateInterval = value;
-					this.SendPropertyChanged("leasingRateInterval");
-					this.OnleasingRateIntervalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modeOfPayment", DbType="Int")]
-		public System.Nullable<int> modeOfPayment
-		{
-			get
-			{
-				return this._modeOfPayment;
-			}
-			set
-			{
-				if ((this._modeOfPayment != value))
-				{
-					this.OnmodeOfPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._modeOfPayment = value;
-					this.SendPropertyChanged("modeOfPayment");
-					this.OnmodeOfPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_duration", DbType="Float")]
-		public System.Nullable<double> duration
-		{
-			get
-			{
-				return this._duration;
-			}
-			set
-			{
-				if ((this._duration != value))
-				{
-					this.OndurationChanging(value);
-					this.SendPropertyChanging();
-					this._duration = value;
-					this.SendPropertyChanged("duration");
-					this.OndurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_durationMode", DbType="Int")]
-		public System.Nullable<int> durationMode
-		{
-			get
-			{
-				return this._durationMode;
-			}
-			set
-			{
-				if ((this._durationMode != value))
-				{
-					this.OndurationModeChanging(value);
-					this.SendPropertyChanging();
-					this._durationMode = value;
-					this.SendPropertyChanged("durationMode");
-					this.OndurationModeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_recoveryValue", DbType="Float")]
-		public System.Nullable<double> recoveryValue
-		{
-			get
-			{
-				return this._recoveryValue;
-			}
-			set
-			{
-				if ((this._recoveryValue != value))
-				{
-					this.OnrecoveryValueChanging(value);
-					this.SendPropertyChanging();
-					this._recoveryValue = value;
-					this.SendPropertyChanged("recoveryValue");
-					this.OnrecoveryValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._UserProfile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_leasingName", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string leasingName
-		{
-			get
-			{
-				return this._leasingName;
-			}
-			set
-			{
-				if ((this._leasingName != value))
-				{
-					this.OnleasingNameChanging(value);
-					this.SendPropertyChanging();
-					this._leasingName = value;
-					this.SendPropertyChanged("leasingName");
-					this.OnleasingNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created
-		{
-			get
-			{
-				return this._created;
-			}
-			set
-			{
-				if ((this._created != value))
-				{
-					this.OncreatedChanging(value);
-					this.SendPropertyChanging();
-					this._created = value;
-					this.SendPropertyChanged("created");
-					this.OncreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_totalExpense", DbType="Float")]
-		public System.Nullable<double> totalExpense
-		{
-			get
-			{
-				return this._totalExpense;
-			}
-			set
-			{
-				if ((this._totalExpense != value))
-				{
-					this.OntotalExpenseChanging(value);
-					this.SendPropertyChanging();
-					this._totalExpense = value;
-					this.SendPropertyChanged("totalExpense");
-					this.OntotalExpenseChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_totalInterest", DbType="Float")]
-		public System.Nullable<double> totalInterest
-		{
-			get
-			{
-				return this._totalInterest;
-			}
-			set
-			{
-				if ((this._totalInterest != value))
-				{
-					this.OntotalInterestChanging(value);
-					this.SendPropertyChanging();
-					this._totalInterest = value;
-					this.SendPropertyChanged("totalInterest");
-					this.OntotalInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserProfile_LeasingData", Storage="_UserProfile", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
-		public UserProfile UserProfile
-		{
-			get
-			{
-				return this._UserProfile.Entity;
-			}
-			set
-			{
-				UserProfile previousValue = this._UserProfile.Entity;
-				if (((previousValue != value) 
-							|| (this._UserProfile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UserProfile.Entity = null;
-						previousValue.LeasingData.Remove(this);
-					}
-					this._UserProfile.Entity = value;
-					if ((value != null))
-					{
-						value.LeasingData.Add(this);
-						this._UserID = value.UserID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("UserProfile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ManagerProfile")]
-	public partial class ManagerProfile : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _AccountID;
-		
-		private string _UserName;
-		
-		private string _Password;
-		
-		private string _TempPassword;
-		
-		private string _Email;
-		
-		private EntitySet<Settings> _Settings;
-		
-		private EntitySet<UserProfile> _UserProfile;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAccountIDChanging(int value);
-    partial void OnAccountIDChanged();
-    partial void OnUserNameChanging(string value);
-    partial void OnUserNameChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnTempPasswordChanging(string value);
-    partial void OnTempPasswordChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    #endregion
-		
-		public ManagerProfile()
-		{
-			this._Settings = new EntitySet<Settings>(new Action<Settings>(this.attach_Settings), new Action<Settings>(this.detach_Settings));
-			this._UserProfile = new EntitySet<UserProfile>(new Action<UserProfile>(this.attach_UserProfile), new Action<UserProfile>(this.detach_UserProfile));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int AccountID
-		{
-			get
-			{
-				return this._AccountID;
-			}
-			set
-			{
-				if ((this._AccountID != value))
-				{
-					this.OnAccountIDChanging(value);
-					this.SendPropertyChanging();
-					this._AccountID = value;
-					this.SendPropertyChanged("AccountID");
-					this.OnAccountIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(25) NOT NULL", CanBeNull=false)]
-		public string UserName
-		{
-			get
-			{
-				return this._UserName;
-			}
-			set
-			{
-				if ((this._UserName != value))
-				{
-					this.OnUserNameChanging(value);
-					this.SendPropertyChanging();
-					this._UserName = value;
-					this.SendPropertyChanged("UserName");
-					this.OnUserNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(250)")]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TempPassword", DbType="VarChar(250)")]
-		public string TempPassword
-		{
-			get
-			{
-				return this._TempPassword;
-			}
-			set
-			{
-				if ((this._TempPassword != value))
-				{
-					this.OnTempPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._TempPassword = value;
-					this.SendPropertyChanged("TempPassword");
-					this.OnTempPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ManagerProfile_Settings", Storage="_Settings", ThisKey="AccountID", OtherKey="AccountID")]
-		public EntitySet<Settings> Settings
-		{
-			get
-			{
-				return this._Settings;
-			}
-			set
-			{
-				this._Settings.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ManagerProfile_UserProfile", Storage="_UserProfile", ThisKey="AccountID", OtherKey="AccountID")]
-		public EntitySet<UserProfile> UserProfile
-		{
-			get
-			{
-				return this._UserProfile;
-			}
-			set
-			{
-				this._UserProfile.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Settings(Settings entity)
-		{
-			this.SendPropertyChanging();
-			entity.ManagerProfile = this;
-		}
-		
-		private void detach_Settings(Settings entity)
-		{
-			this.SendPropertyChanging();
-			entity.ManagerProfile = null;
-		}
-		
-		private void attach_UserProfile(UserProfile entity)
-		{
-			this.SendPropertyChanging();
-			entity.ManagerProfile = this;
-		}
-		
-		private void detach_UserProfile(UserProfile entity)
-		{
-			this.SendPropertyChanging();
-			entity.ManagerProfile = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Stocks")]
-	public partial class Stocks : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _StockID;
-		
-		private string _Name;
-		
-		private string _Symbol;
-		
-		private string _StockExchange;
-		
-		private string _Typ;
-		
-		private EntitySet<StocksMap> _StocksMap;
-		
-    #region Definitionen der Erweiterungsmethoden
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnStockIDChanging(int value);
-    partial void OnStockIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnSymbolChanging(string value);
-    partial void OnSymbolChanged();
-    partial void OnStockExchangeChanging(string value);
-    partial void OnStockExchangeChanged();
-    partial void OnTypChanging(string value);
-    partial void OnTypChanged();
-    #endregion
-		
-		public Stocks()
-		{
-			this._StocksMap = new EntitySet<StocksMap>(new Action<StocksMap>(this.attach_StocksMap), new Action<StocksMap>(this.detach_StocksMap));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StockID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int StockID
-		{
-			get
-			{
-				return this._StockID;
-			}
-			set
-			{
-				if ((this._StockID != value))
-				{
-					this.OnStockIDChanging(value);
-					this.SendPropertyChanging();
-					this._StockID = value;
-					this.SendPropertyChanged("StockID");
-					this.OnStockIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Symbol", DbType="VarChar(50)")]
-		public string Symbol
-		{
-			get
-			{
-				return this._Symbol;
-			}
-			set
-			{
-				if ((this._Symbol != value))
-				{
-					this.OnSymbolChanging(value);
-					this.SendPropertyChanging();
-					this._Symbol = value;
-					this.SendPropertyChanged("Symbol");
-					this.OnSymbolChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StockExchange", DbType="VarChar(10)")]
-		public string StockExchange
-		{
-			get
-			{
-				return this._StockExchange;
-			}
-			set
-			{
-				if ((this._StockExchange != value))
-				{
-					this.OnStockExchangeChanging(value);
-					this.SendPropertyChanging();
-					this._StockExchange = value;
-					this.SendPropertyChanged("StockExchange");
-					this.OnStockExchangeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Typ", DbType="VarChar(50)")]
-		public string Typ
-		{
-			get
-			{
-				return this._Typ;
-			}
-			set
-			{
-				if ((this._Typ != value))
-				{
-					this.OnTypChanging(value);
-					this.SendPropertyChanging();
-					this._Typ = value;
-					this.SendPropertyChanged("Typ");
-					this.OnTypChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stocks_StocksMap", Storage="_StocksMap", ThisKey="StockID", OtherKey="StockID")]
-		public EntitySet<StocksMap> StocksMap
-		{
-			get
-			{
-				return this._StocksMap;
-			}
-			set
-			{
-				this._StocksMap.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_StocksMap(StocksMap entity)
-		{
-			this.SendPropertyChanging();
-			entity.Stocks = this;
-		}
-		
-		private void detach_StocksMap(StocksMap entity)
-		{
-			this.SendPropertyChanging();
-			entity.Stocks = null;
 		}
 	}
 }

@@ -32,8 +32,8 @@ namespace MoneyMaker.Views
         public BankAccountView()
         {
             InitializeComponent();
-            bankModel = new BankAccountModel(mainForm.User);
-            depotModel = new DepotModel(mainForm.User);
+            bankModel = new BankAccountModel();
+            depotModel = new DepotModel();
 
             cbxTransactionType.DisplayMember = "Description";
             cbxTransactionType.Items.Add(new TransactionItem { Description = "Einzahlen", TransactionType = 'c' });

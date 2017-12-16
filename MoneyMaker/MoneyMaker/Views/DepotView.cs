@@ -34,8 +34,8 @@ namespace MoneyMaker.Views
         public DepotView()
         {
             InitializeComponent();
-            depotModel = new DepotModel(mainForm.User);
-            bankModel = new BankAccountModel(mainForm.User);
+            depotModel = new DepotModel();
+            bankModel = new BankAccountModel();
 
             refreshDepotDataAsync();
             updateStockPricesInListViewAsync();

@@ -38,7 +38,6 @@
             this.navigationTree = new System.Windows.Forms.TreeView();
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.cbxCurrentUser = new System.Windows.Forms.ComboBox();
             this.lblHeadLine = new System.Windows.Forms.Label();
             this.panelView = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -141,29 +140,12 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panelTop.Controls.Add(this.cbxCurrentUser);
             this.panelTop.Controls.Add(this.lblHeadLine);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(765, 51);
             this.panelTop.TabIndex = 8;
-            // 
-            // cbxCurrentUser
-            // 
-            this.cbxCurrentUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxCurrentUser.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxCurrentUser.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbxCurrentUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxCurrentUser.FormattingEnabled = true;
-            this.cbxCurrentUser.Location = new System.Drawing.Point(610, 11);
-            this.cbxCurrentUser.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxCurrentUser.Name = "cbxCurrentUser";
-            this.cbxCurrentUser.Size = new System.Drawing.Size(141, 25);
-            this.cbxCurrentUser.TabIndex = 6;
-            this.frmMainTooltip.SetToolTip(this.cbxCurrentUser, "Aktuelles Nutzerprofil");
-            this.cbxCurrentUser.SelectedIndexChanged += new System.EventHandler(this.cbxCurrentUser_SelectedIndexChanged);
-            this.cbxCurrentUser.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cbxCurrentUser_Format);
             // 
             // lblHeadLine
             // 
@@ -173,7 +155,7 @@
             this.lblHeadLine.ForeColor = System.Drawing.SystemColors.Highlight;
             this.lblHeadLine.Location = new System.Drawing.Point(15, 11);
             this.lblHeadLine.Name = "lblHeadLine";
-            this.lblHeadLine.Size = new System.Drawing.Size(102, 24);
+            this.lblHeadLine.Size = new System.Drawing.Size(131, 29);
             this.lblHeadLine.TabIndex = 7;
             this.lblHeadLine.Text = "Dashboard";
             // 
@@ -186,7 +168,7 @@
             this.panelView.Location = new System.Drawing.Point(0, 0);
             this.panelView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelView.Name = "panelView";
-            this.panelView.Size = new System.Drawing.Size(763, 494);
+            this.panelView.Size = new System.Drawing.Size(763, 495);
             this.panelView.TabIndex = 0;
             // 
             // statusStrip
@@ -213,7 +195,7 @@
             this.statusLabel.BackColor = System.Drawing.Color.Transparent;
             this.statusLabel.ForeColor = System.Drawing.SystemColors.Window;
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(37, 16);
+            this.statusLabel.Size = new System.Drawing.Size(48, 16);
             this.statusLabel.Text = "Bereit";
             // 
             // toolStripStatusLabel1
@@ -228,7 +210,7 @@
             this.statusSettingsLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.statusSettingsLink.LinkColor = System.Drawing.SystemColors.Window;
             this.statusSettingsLink.Name = "statusSettingsLink";
-            this.statusSettingsLink.Size = new System.Drawing.Size(772, 16);
+            this.statusSettingsLink.Size = new System.Drawing.Size(730, 16);
             this.statusSettingsLink.Spring = true;
             this.statusSettingsLink.Text = "Einstellungen";
             this.statusSettingsLink.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -242,7 +224,7 @@
             this.statusLegalLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.statusLegalLink.LinkColor = System.Drawing.Color.White;
             this.statusLegalLink.Name = "statusLegalLink";
-            this.statusLegalLink.Size = new System.Drawing.Size(71, 16);
+            this.statusLegalLink.Size = new System.Drawing.Size(87, 16);
             this.statusLegalLink.Text = "Rechtliches";
             this.statusLegalLink.Click += new System.EventHandler(this.statusLegalLink_Click);
             // 
@@ -254,15 +236,13 @@
             this.statusStripManager.Image = global::MoneyMaker.Properties.Resources.UserProfilesIcon95;
             this.statusStripManager.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.statusStripManager.Name = "statusStripManager";
-            this.statusStripManager.Size = new System.Drawing.Size(87, 19);
+            this.statusStripManager.Size = new System.Drawing.Size(102, 19);
             this.statusStripManager.Text = "Manager";
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.logoutToolStripMenuItem.Text = "Abmelden";
-            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(75, 26);
             // 
             // frmMainTooltip
             // 
@@ -272,7 +252,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(984, 567);
@@ -313,7 +293,6 @@
         private System.Windows.Forms.Panel panelView;
         private System.Windows.Forms.TreeView navigationTree;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ComboBox cbxCurrentUser;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.Label lblHeadLine;

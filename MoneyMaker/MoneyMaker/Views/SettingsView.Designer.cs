@@ -79,68 +79,6 @@
             this.cbxDataProvider.Size = new System.Drawing.Size(158, 21);
             this.cbxDataProvider.TabIndex = 2;
             // 
-            // tbPasswordOld
-            // 
-            this.tbPasswordOld.Location = new System.Drawing.Point(185, 31);
-            this.tbPasswordOld.Name = "tbPasswordOld";
-            this.tbPasswordOld.PasswordChar = '●';
-            this.tbPasswordOld.Size = new System.Drawing.Size(158, 20);
-            this.tbPasswordOld.TabIndex = 3;
-            // 
-            // tbPasswordNew1
-            // 
-            this.tbPasswordNew1.Location = new System.Drawing.Point(185, 57);
-            this.tbPasswordNew1.Name = "tbPasswordNew1";
-            this.tbPasswordNew1.PasswordChar = '●';
-            this.tbPasswordNew1.Size = new System.Drawing.Size(158, 20);
-            this.tbPasswordNew1.TabIndex = 4;
-            this.tbPasswordNew1.TextChanged += new System.EventHandler(this.tbPasswordNew1_TextChanged);
-            // 
-            // tbPasswordNew2
-            // 
-            this.tbPasswordNew2.Location = new System.Drawing.Point(185, 83);
-            this.tbPasswordNew2.Name = "tbPasswordNew2";
-            this.tbPasswordNew2.PasswordChar = '●';
-            this.tbPasswordNew2.Size = new System.Drawing.Size(158, 20);
-            this.tbPasswordNew2.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Altes Passwort";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Neues Passwort";
-            // 
-            // lblPasswordNew2
-            // 
-            this.lblPasswordNew2.AutoSize = true;
-            this.lblPasswordNew2.Location = new System.Drawing.Point(17, 85);
-            this.lblPasswordNew2.Name = "lblPasswordNew2";
-            this.lblPasswordNew2.Size = new System.Drawing.Size(136, 13);
-            this.lblPasswordNew2.TabIndex = 8;
-            this.lblPasswordNew2.Text = "Neues Passwort bestätigen";
-            // 
-            // btnChangePassword
-            // 
-            this.btnChangePassword.Location = new System.Drawing.Point(185, 120);
-            this.btnChangePassword.Name = "btnChangePassword";
-            this.btnChangePassword.Size = new System.Drawing.Size(158, 23);
-            this.btnChangePassword.TabIndex = 9;
-            this.btnChangePassword.Text = "Passwort ändern";
-            this.btnChangePassword.UseVisualStyleBackColor = true;
-            this.btnChangePassword.Click += new System.EventHandler(this.btnChangePassword_Click);
-            // 
             // lblCurrencyInfo
             // 
             this.lblCurrencyInfo.AutoSize = true;
