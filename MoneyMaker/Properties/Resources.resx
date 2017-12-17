@@ -124,12 +124,6 @@
   <data name="DepotIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DepotIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="leasingIcon512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\leasingIcon512.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LoanIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LoanIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="UserProfilesIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UserProfilesIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -141,12 +135,6 @@
   </data>
   <data name="DepotIcon95" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DepotIcon95.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeasingIcon95" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeasingIcon95.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LoanIcon95" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LoanIcon95.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserProfilesIcon95" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UserProfilesIcon95.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -174,9 +162,6 @@
   </data>
   <data name="depot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\depot.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="financialCalculator" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\financialCalculator.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="firstStep" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\firstStep.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

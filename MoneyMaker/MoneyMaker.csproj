@@ -322,7 +322,6 @@
     </Content>
     <None Include="Resources\bank.rtf" />
     <None Include="Resources\depot.rtf" />
-    <None Include="Resources\financialCalculator.rtf" />
     <None Include="Resources\firstStep.rtf" />
     <None Include="Resources\index.rtf" />
     <None Include="Resources\LegalIcon.png" />
@@ -351,14 +350,10 @@
     <None Include="Resources\watchlist.rtf" />
     <None Include="Resources\WatchlistIcon95.png" />
     <None Include="Resources\UserProfilesIcon95.png" />
-    <None Include="Resources\LoanIcon95.png" />
-    <None Include="Resources\LeasingIcon95.png" />
     <None Include="Resources\DepotIcon95.png" />
     <None Include="Resources\BankIcon95.png" />
-    <None Include="Resources\LoanIcon.png" />
     <None Include="Resources\WatchlistIcon.png" />
     <None Include="Resources\UserProfilesIcon.png" />
-    <None Include="Resources\leasingIcon512.jpg" />
     <None Include="Resources\DepotIcon.png" />
     <None Include="Resources\BankIcon.png" />
   </ItemGroup>

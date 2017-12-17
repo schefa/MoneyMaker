@@ -89,13 +89,7 @@ namespace MoneyMaker
             
             rtbContent.Rtf = Properties.Resources.bank;
             pbNavigationChange.Image = Properties.Resources.BankIcon;
-        }
-
-        private void llFinanzierungsrechner_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {            
-            rtbContent.Rtf = Properties.Resources.financialCalculator;
-            pbNavigationChange.Image = Properties.Resources.LoanIcon;
-        }       
+        }   
 
         //This method allows you to search and highlight particluar words
         private void tbSearch_TextChanged(object sender, EventArgs e)

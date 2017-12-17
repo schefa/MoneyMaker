@@ -45,7 +45,6 @@ namespace MoneyMaker
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.lblHeadline = new System.Windows.Forms.Label();
             this.pnlNavigation = new System.Windows.Forms.Panel();
-            this.llFinanzierungsrechner = new System.Windows.Forms.LinkLabel();
             this.llVerrechungskonto = new System.Windows.Forms.LinkLabel();
             this.llWatchlist = new System.Windows.Forms.LinkLabel();
             this.llDepot = new System.Windows.Forms.LinkLabel();
@@ -67,10 +66,10 @@ namespace MoneyMaker
             this.pnlMain.BackColor = System.Drawing.SystemColors.Window;
             this.pnlMain.Controls.Add(this.rtbContent);
             this.pnlMain.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pnlMain.Location = new System.Drawing.Point(426, 117);
-            this.pnlMain.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pnlMain.Location = new System.Drawing.Point(284, 75);
+            this.pnlMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(718, 938);
+            this.pnlMain.Size = new System.Drawing.Size(479, 600);
             this.pnlMain.TabIndex = 0;
             // 
             // rtbContent
@@ -80,11 +79,11 @@ namespace MoneyMaker
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbContent.BackColor = System.Drawing.SystemColors.Window;
             this.rtbContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbContent.Location = new System.Drawing.Point(24, 17);
-            this.rtbContent.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rtbContent.Location = new System.Drawing.Point(16, 11);
+            this.rtbContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rtbContent.Name = "rtbContent";
             this.rtbContent.ReadOnly = true;
-            this.rtbContent.Size = new System.Drawing.Size(670, 887);
+            this.rtbContent.Size = new System.Drawing.Size(447, 568);
             this.rtbContent.TabIndex = 0;
             this.rtbContent.Text = "";
             // 
@@ -94,10 +93,10 @@ namespace MoneyMaker
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlTitle.Controls.Add(this.tbSearch);
             this.pnlTitle.Controls.Add(this.lblHeadline);
-            this.pnlTitle.Location = new System.Drawing.Point(24, 23);
-            this.pnlTitle.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pnlTitle.Location = new System.Drawing.Point(16, 15);
+            this.pnlTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlTitle.Name = "pnlTitle";
-            this.pnlTitle.Size = new System.Drawing.Size(1120, 83);
+            this.pnlTitle.Size = new System.Drawing.Size(747, 53);
             this.pnlTitle.TabIndex = 1;
             // 
             // tbSearch
@@ -106,10 +105,10 @@ namespace MoneyMaker
             this.tbSearch.BackColor = System.Drawing.Color.White;
             this.tbSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.ForeColor = System.Drawing.Color.Gray;
-            this.tbSearch.Location = new System.Drawing.Point(816, 19);
-            this.tbSearch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tbSearch.Location = new System.Drawing.Point(544, 12);
+            this.tbSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(268, 38);
+            this.tbSearch.Size = new System.Drawing.Size(180, 26);
             this.tbSearch.TabIndex = 3;
             this.tbSearch.Text = "Suchen...";
             this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
@@ -121,10 +120,10 @@ namespace MoneyMaker
             this.lblHeadline.AutoSize = true;
             this.lblHeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeadline.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeadline.Location = new System.Drawing.Point(0, 19);
-            this.lblHeadline.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblHeadline.Location = new System.Drawing.Point(0, 12);
+            this.lblHeadline.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeadline.Name = "lblHeadline";
-            this.lblHeadline.Size = new System.Drawing.Size(678, 63);
+            this.lblHeadline.Size = new System.Drawing.Size(435, 39);
             this.lblHeadline.TabIndex = 1;
             this.lblHeadline.Text = "Willkommen im Handbuch";
             // 
@@ -132,40 +131,25 @@ namespace MoneyMaker
             // 
             this.pnlNavigation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlNavigation.Controls.Add(this.llFinanzierungsrechner);
             this.pnlNavigation.Controls.Add(this.llVerrechungskonto);
             this.pnlNavigation.Controls.Add(this.llWatchlist);
             this.pnlNavigation.Controls.Add(this.llDepot);
             this.pnlNavigation.Controls.Add(this.llFirstStep);
-            this.pnlNavigation.Location = new System.Drawing.Point(24, 117);
-            this.pnlNavigation.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pnlNavigation.Location = new System.Drawing.Point(16, 75);
+            this.pnlNavigation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlNavigation.Name = "pnlNavigation";
-            this.pnlNavigation.Size = new System.Drawing.Size(390, 537);
+            this.pnlNavigation.Size = new System.Drawing.Size(260, 344);
             this.pnlNavigation.TabIndex = 2;
-            // 
-            // llFinanzierungsrechner
-            // 
-            this.llFinanzierungsrechner.AutoSize = true;
-            this.llFinanzierungsrechner.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.llFinanzierungsrechner.ForeColor = System.Drawing.Color.Blue;
-            this.llFinanzierungsrechner.Location = new System.Drawing.Point(6, 340);
-            this.llFinanzierungsrechner.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.llFinanzierungsrechner.Name = "llFinanzierungsrechner";
-            this.llFinanzierungsrechner.Size = new System.Drawing.Size(327, 37);
-            this.llFinanzierungsrechner.TabIndex = 10;
-            this.llFinanzierungsrechner.TabStop = true;
-            this.llFinanzierungsrechner.Text = "Finanzierungsrechner";
-            this.llFinanzierungsrechner.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llFinanzierungsrechner_LinkClicked);
             // 
             // llVerrechungskonto
             // 
             this.llVerrechungskonto.AutoSize = true;
             this.llVerrechungskonto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llVerrechungskonto.ForeColor = System.Drawing.Color.Blue;
-            this.llVerrechungskonto.Location = new System.Drawing.Point(6, 263);
-            this.llVerrechungskonto.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.llVerrechungskonto.Location = new System.Drawing.Point(4, 168);
+            this.llVerrechungskonto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.llVerrechungskonto.Name = "llVerrechungskonto";
-            this.llVerrechungskonto.Size = new System.Drawing.Size(90, 37);
+            this.llVerrechungskonto.Size = new System.Drawing.Size(57, 25);
             this.llVerrechungskonto.TabIndex = 9;
             this.llVerrechungskonto.TabStop = true;
             this.llVerrechungskonto.Text = "Bank";
@@ -176,10 +160,10 @@ namespace MoneyMaker
             this.llWatchlist.AutoSize = true;
             this.llWatchlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llWatchlist.ForeColor = System.Drawing.Color.Blue;
-            this.llWatchlist.Location = new System.Drawing.Point(6, 187);
-            this.llWatchlist.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.llWatchlist.Location = new System.Drawing.Point(4, 120);
+            this.llWatchlist.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.llWatchlist.Name = "llWatchlist";
-            this.llWatchlist.Size = new System.Drawing.Size(148, 37);
+            this.llWatchlist.Size = new System.Drawing.Size(92, 25);
             this.llWatchlist.TabIndex = 8;
             this.llWatchlist.TabStop = true;
             this.llWatchlist.Text = "Watchlist";
@@ -190,10 +174,10 @@ namespace MoneyMaker
             this.llDepot.AutoSize = true;
             this.llDepot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llDepot.ForeColor = System.Drawing.Color.Blue;
-            this.llDepot.Location = new System.Drawing.Point(6, 110);
-            this.llDepot.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.llDepot.Location = new System.Drawing.Point(4, 70);
+            this.llDepot.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.llDepot.Name = "llDepot";
-            this.llDepot.Size = new System.Drawing.Size(102, 37);
+            this.llDepot.Size = new System.Drawing.Size(64, 25);
             this.llDepot.TabIndex = 7;
             this.llDepot.TabStop = true;
             this.llDepot.Text = "Depot";
@@ -204,10 +188,10 @@ namespace MoneyMaker
             this.llFirstStep.AutoSize = true;
             this.llFirstStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.llFirstStep.ForeColor = System.Drawing.Color.Blue;
-            this.llFirstStep.Location = new System.Drawing.Point(6, 33);
-            this.llFirstStep.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.llFirstStep.Location = new System.Drawing.Point(4, 21);
+            this.llFirstStep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.llFirstStep.Name = "llFirstStep";
-            this.llFirstStep.Size = new System.Drawing.Size(208, 37);
+            this.llFirstStep.Size = new System.Drawing.Size(128, 25);
             this.llFirstStep.TabIndex = 6;
             this.llFirstStep.TabStop = true;
             this.llFirstStep.Text = "Erste Schritte";
@@ -217,36 +201,36 @@ namespace MoneyMaker
             // 
             this.pnlPicture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlPicture.Controls.Add(this.pbNavigationChange);
-            this.pnlPicture.Location = new System.Drawing.Point(24, 683);
-            this.pnlPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pnlPicture.Location = new System.Drawing.Point(16, 437);
+            this.pnlPicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlPicture.Name = "pnlPicture";
-            this.pnlPicture.Size = new System.Drawing.Size(390, 373);
+            this.pnlPicture.Size = new System.Drawing.Size(260, 239);
             this.pnlPicture.TabIndex = 11;
             // 
             // pbNavigationChange
             // 
-            this.pbNavigationChange.Location = new System.Drawing.Point(40, 37);
-            this.pbNavigationChange.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pbNavigationChange.Location = new System.Drawing.Point(27, 24);
+            this.pbNavigationChange.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbNavigationChange.Name = "pbNavigationChange";
-            this.pbNavigationChange.Size = new System.Drawing.Size(292, 302);
+            this.pbNavigationChange.Size = new System.Drawing.Size(195, 193);
             this.pbNavigationChange.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbNavigationChange.TabIndex = 0;
             this.pbNavigationChange.TabStop = false;
             // 
             // FrmGuide
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 1079);
+            this.ClientSize = new System.Drawing.Size(779, 669);
             this.Controls.Add(this.pnlPicture);
             this.Controls.Add(this.pnlNavigation);
             this.Controls.Add(this.pnlTitle);
             this.Controls.Add(this.pnlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1174, 1088);
+            this.MinimumSize = new System.Drawing.Size(789, 675);
             this.Name = "FrmGuide";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Handbuch MoneyMaker";
@@ -267,7 +251,6 @@ namespace MoneyMaker
         private System.Windows.Forms.Panel pnlTitle;
         private System.Windows.Forms.Label lblHeadline;
         private System.Windows.Forms.Panel pnlNavigation;
-        private System.Windows.Forms.LinkLabel llFinanzierungsrechner;
         private System.Windows.Forms.LinkLabel llVerrechungskonto;
         private System.Windows.Forms.LinkLabel llWatchlist;
         private System.Windows.Forms.LinkLabel llDepot;
