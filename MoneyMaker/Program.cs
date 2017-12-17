@@ -33,9 +33,7 @@ namespace MoneyMaker
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);         
-
-            string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-             
+            
             Application.Run(new FrmMain()); 
         }
     }

@@ -29,6 +29,7 @@ namespace MoneyMaker.ViewModels
 
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 
+            /*
             // Checking if local server instance was selected, and there ain't more than one MoneyMaker process opened
             if (!(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
             {
@@ -42,6 +43,7 @@ namespace MoneyMaker.ViewModels
                 Process.Start(startInfo);
 
             }
+            */
 
             using (connection = new SqlConnection(connectionString))
             {
