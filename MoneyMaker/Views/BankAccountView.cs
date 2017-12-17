@@ -56,7 +56,7 @@ namespace MoneyMaker.Views
         {
             mainForm.notifyUser(FrmMain.NotifyType.PrepareMessage, "Lädt Transaktionsdaten...");
             
-            decimal? accBalance = bankModel.getBank().AccountBalance;
+            decimal? accBalance = bankModel.getBank()?.AccountBalance;
             
             lvTransactions.Items.Clear();
             Task<List<TransactionItem>> task = Task.Run(() => bankModel.getTransactions(start,end));

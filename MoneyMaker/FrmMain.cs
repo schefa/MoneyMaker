@@ -46,8 +46,7 @@ namespace MoneyMaker
             // Sets the icon
             Icon = Properties.Resources.LogoIcon;
             
-            createNavigationTree(); 
-
+            createNavigationTree();
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace MoneyMaker
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 
             // Checking if local server instance was selected, and there ain't more than one MoneyMaker process opened
-            if (connectionString.Contains("localdb") && !(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
+            if (!(Process.GetProcesses().Count(p => p.ProcessName == moneyMakerProcess) > 1))
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 
